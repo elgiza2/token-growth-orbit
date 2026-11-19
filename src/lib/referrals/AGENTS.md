@@ -1,0 +1,2 @@
+- Subdomain→marketer code lives in rules.ts; profiles.referred_by is set once by a server fn and guarded by a trigger; signup/payment Telegram notices come from DB triggers (pg_net + Vault token); telegram_operators decides admin vs marketer by Telegram username. Why: every payment path is covered without editing each provider webhook.
+- /api/ceyo-chat runs on its own abort signal, aborted only via conversations.stop_requested_at. Why: leaving the chat must not stop a reply.
