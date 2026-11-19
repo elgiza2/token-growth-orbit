@@ -1,0 +1,1 @@
+- /pricing, /<lang> and /<lang>/<country> are server-rendered full HTML from buildLanding.ts (same template as the main landing); languages/countries live in localePages.ts, extra translations in landingI18n.ts, all listed in /sitemap.xml with hreflang. Why: one design, crawlable pages.
