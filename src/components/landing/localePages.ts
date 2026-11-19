@@ -1,3 +1,4 @@
+import { TOOLS } from "@/components/compare/tools";
 /** Browser-safe list of public language and country pages. URL: /<lang> and /<lang>/<country>. */
 export const PAGE_LANGS = ["en", "ar", "es", "fr", "de", "pt", "ru", "tr", "hi", "zh"] as const;
 export type PageLang = (typeof PAGE_LANGS)[number];
@@ -24,5 +25,5 @@ export const countryName = (c: Country, l: PageLang, extra?: Record<string, stri
 
 /** Every public marketing path, for the sitemap. */
 export function marketingPaths(): string[] {
-  return ["/", "/pricing", ...PAGE_LANGS.flatMap((l) => [`/${l}`, `/${l}/pricing`, ...COUNTRIES.map((c) => `/${l}/${c.code}`)])];
+  return ["/", "/pricing", "/compare", ...TOOLS.map((t) => `/compare/${t.slug}`), ...PAGE_LANGS.flatMap((l) => [`/${l}`, `/${l}/pricing`, ...COUNTRIES.map((c) => `/${l}/${c.code}`)])];
 }

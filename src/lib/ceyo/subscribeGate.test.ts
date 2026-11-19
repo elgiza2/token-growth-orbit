@@ -10,6 +10,6 @@ describe("subscribe gate", () => {
 });
 describe("locale pages", () => {
   it("covers 10 languages", () => expect(PAGE_LANGS.length).toBe(10));
-  it("sitemap lists every language × country page", () => expect(marketingPaths()).toHaveLength(2 + PAGE_LANGS.length * (2 + COUNTRIES.length)));
+  it("sitemap lists every language × country page", () => expect(marketingPaths()).toHaveLength(3 + 30 + PAGE_LANGS.length * (2 + COUNTRIES.length)));
   it("pricing and locale pages stay on the marketer landing host", () => { expect(landingRedirect("matra.ceyo.app", "/pricing")).toBeNull(); expect(landingRedirect("matra.ceyo.app", "/ar/eg")).toBeNull(); });
 });
