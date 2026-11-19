@@ -65,7 +65,8 @@ export function buildLandingHtml(o: LandingOptions): string {
   const cname = o.country ? countryName(o.country, lang, LANDING_I18N[lang]?.countries) : "";
   const values: Record<string, string> = { ...copy.text, skyPainting, appUrl: o.appLink("/auth?mode=signup") };
   if (o.country) { values.heroEyebrow = fill(t.inCountry, "c", cname); values.heroBody = fill(t.countryBody, "c", cname); }
-  if (o.mode === "pricing") { values.heroEyebrow = t.pricingEyebrow; values.heroBody = t.pricingBody; }
+  if (o.mode === "pricing") { values.heroEyebrow = ""; values.heroBody = t.pricingBody; }
+  values.heroEyebrowTag = values.heroEyebrow ? `<p class="eyebrow">${esc(values.heroEyebrow)}</p>` : "";
 
   const pricing = (["plus", "pro", "ultra"] as const).map((tier) => {
     const p = PLAN_PRICES[tier];
@@ -110,6 +111,7 @@ export function buildLandingHtml(o: LandingOptions): string {
 
   html = html
     .replace("{{orbCss}}", `<style>${orbCss}</style>`)
+    .replace("{{heroEyebrowTag}}", values.heroEyebrowTag)
     .replace("{{storyRows}}", rows).replace("{{pricingRows}}", pricing).replace("{{faqRows}}", faqs)
     .replace(/\{\{(\w+)\}\}/g, (_, k: string) => esc(values[k] ?? ""))
     .replace('<html lang="en">', `<html lang="${lang}" dir="${rtl ? "rtl" : "ltr"}">`)
