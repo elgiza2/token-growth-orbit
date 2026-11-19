@@ -743,3 +743,4 @@
 - [x] Seven distinct designs from the user's prompts (Halden, Petalyx, Orvante, Velia, full-bleed, Tidewell, Nectarline)
 - [x] One page per country at /countries/<slug> in its own language, with country photos; old links redirect; footer + sitemap list them
 - [ ] Finish copy for every country (generation running; remaining countries publish automatically after build_index.py)
+- [x] Remove Israel from country pages
