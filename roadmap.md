@@ -737,3 +737,4 @@
 - [x] Light theme: pure white page backgrounds (no grey)
 - [x] Translate remaining English text on home/settings (Arabic + other languages)
 - [x] Pricing page before sign-up (web only), 22 SEO/GEO pages, trial excluded from marketer share, subscribe-first chat reply
+- [ ] Language/country landing pages on the original design in the 10 most spoken languages, all in the sitemap

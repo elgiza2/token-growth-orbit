@@ -18,10 +18,9 @@ import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SecurityRouteImport } from './routes/security'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SubscriptionTermsRouteImport } from './routes/subscription-terms'
 import { Route as TermsRouteImport } from './routes/terms'
-import { Route as AiIndexRouteImport } from './routes/ai.index'
-import { Route as AiSlugRouteImport } from './routes/ai.$slug'
 import { Route as ApiAnythingRouteImport } from './routes/api/anything'
 import { Route as ApiBillingRouteImport } from './routes/api/billing'
 import { Route as ApiCallFollowupRouteImport } from './routes/api/call-followup'
@@ -51,7 +50,27 @@ import { Route as ApiVoiceTranscribeRouteImport } from './routes/api/voice-trans
 import { Route as ApiWalletRouteImport } from './routes/api/wallet'
 import { Route as ApiWalletActionRouteImport } from './routes/api/wallet-action'
 import { Route as ApiWebSearchRouteImport } from './routes/api/web-search'
+import { Route as ArIndexRouteImport } from './routes/ar.index'
+import { Route as ArCountryRouteImport } from './routes/ar.$country'
 import { Route as AuthNativeReturnRouteImport } from './routes/auth.native-return'
+import { Route as DeIndexRouteImport } from './routes/de.index'
+import { Route as DeCountryRouteImport } from './routes/de.$country'
+import { Route as EnIndexRouteImport } from './routes/en.index'
+import { Route as EnCountryRouteImport } from './routes/en.$country'
+import { Route as EsIndexRouteImport } from './routes/es.index'
+import { Route as EsCountryRouteImport } from './routes/es.$country'
+import { Route as FrIndexRouteImport } from './routes/fr.index'
+import { Route as FrCountryRouteImport } from './routes/fr.$country'
+import { Route as HiIndexRouteImport } from './routes/hi.index'
+import { Route as HiCountryRouteImport } from './routes/hi.$country'
+import { Route as PtIndexRouteImport } from './routes/pt.index'
+import { Route as PtCountryRouteImport } from './routes/pt.$country'
+import { Route as RuIndexRouteImport } from './routes/ru.index'
+import { Route as RuCountryRouteImport } from './routes/ru.$country'
+import { Route as TrIndexRouteImport } from './routes/tr.index'
+import { Route as TrCountryRouteImport } from './routes/tr.$country'
+import { Route as ZhIndexRouteImport } from './routes/zh.index'
+import { Route as ZhCountryRouteImport } from './routes/zh.$country'
 import { Route as ApiAgentSplatRouteImport } from './routes/api/agent.$'
 import { Route as ApiPublicCeyoJobsRouteImport } from './routes/api/public/ceyo-jobs'
 import { Route as ApiPublicCeyoRoutinesRouteImport } from './routes/api/public/ceyo-routines'
@@ -121,6 +140,11 @@ const SecurityRoute = SecurityRouteImport.update({
   path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SubscriptionTermsRoute = SubscriptionTermsRouteImport.update({
   id: '/subscription-terms',
   path: '/subscription-terms',
@@ -129,16 +153,6 @@ const SubscriptionTermsRoute = SubscriptionTermsRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AiIndexRoute = AiIndexRouteImport.update({
-  id: '/ai/',
-  path: '/ai/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AiSlugRoute = AiSlugRouteImport.update({
-  id: '/ai/$slug',
-  path: '/ai/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAnythingRoute = ApiAnythingRouteImport.update({
@@ -286,9 +300,109 @@ const ApiWebSearchRoute = ApiWebSearchRouteImport.update({
   path: '/api/web-search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArIndexRoute = ArIndexRouteImport.update({
+  id: '/ar/',
+  path: '/ar/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArCountryRoute = ArCountryRouteImport.update({
+  id: '/ar/$country',
+  path: '/ar/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthNativeReturnRoute = AuthNativeReturnRouteImport.update({
   id: '/auth/native-return',
   path: '/auth/native-return',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeIndexRoute = DeIndexRouteImport.update({
+  id: '/de/',
+  path: '/de/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeCountryRoute = DeCountryRouteImport.update({
+  id: '/de/$country',
+  path: '/de/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnIndexRoute = EnIndexRouteImport.update({
+  id: '/en/',
+  path: '/en/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnCountryRoute = EnCountryRouteImport.update({
+  id: '/en/$country',
+  path: '/en/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsIndexRoute = EsIndexRouteImport.update({
+  id: '/es/',
+  path: '/es/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsCountryRoute = EsCountryRouteImport.update({
+  id: '/es/$country',
+  path: '/es/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FrIndexRoute = FrIndexRouteImport.update({
+  id: '/fr/',
+  path: '/fr/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FrCountryRoute = FrCountryRouteImport.update({
+  id: '/fr/$country',
+  path: '/fr/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HiIndexRoute = HiIndexRouteImport.update({
+  id: '/hi/',
+  path: '/hi/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HiCountryRoute = HiCountryRouteImport.update({
+  id: '/hi/$country',
+  path: '/hi/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PtIndexRoute = PtIndexRouteImport.update({
+  id: '/pt/',
+  path: '/pt/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PtCountryRoute = PtCountryRouteImport.update({
+  id: '/pt/$country',
+  path: '/pt/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RuIndexRoute = RuIndexRouteImport.update({
+  id: '/ru/',
+  path: '/ru/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RuCountryRoute = RuCountryRouteImport.update({
+  id: '/ru/$country',
+  path: '/ru/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrIndexRoute = TrIndexRouteImport.update({
+  id: '/tr/',
+  path: '/tr/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrCountryRoute = TrCountryRouteImport.update({
+  id: '/tr/$country',
+  path: '/tr/$country',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ZhIndexRoute = ZhIndexRouteImport.update({
+  id: '/zh/',
+  path: '/zh/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ZhCountryRoute = ZhCountryRouteImport.update({
+  id: '/zh/$country',
+  path: '/zh/$country',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAgentSplatRoute = ApiAgentSplatRouteImport.update({
@@ -423,9 +537,9 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/subscription-terms': typeof SubscriptionTermsRoute
   '/terms': typeof TermsRoute
-  '/ai/$slug': typeof AiSlugRoute
   '/api/anything': typeof ApiAnythingRoute
   '/api/billing': typeof ApiBillingRoute
   '/api/call-followup': typeof ApiCallFollowupRoute
@@ -455,8 +569,27 @@ export interface FileRoutesByFullPath {
   '/api/wallet': typeof ApiWalletRoute
   '/api/wallet-action': typeof ApiWalletActionRoute
   '/api/web-search': typeof ApiWebSearchRoute
+  '/ar/$country': typeof ArCountryRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
-  '/ai/': typeof AiIndexRoute
+  '/de/$country': typeof DeCountryRoute
+  '/en/$country': typeof EnCountryRoute
+  '/es/$country': typeof EsCountryRoute
+  '/fr/$country': typeof FrCountryRoute
+  '/hi/$country': typeof HiCountryRoute
+  '/pt/$country': typeof PtCountryRoute
+  '/ru/$country': typeof RuCountryRoute
+  '/tr/$country': typeof TrCountryRoute
+  '/zh/$country': typeof ZhCountryRoute
+  '/ar/': typeof ArIndexRoute
+  '/de/': typeof DeIndexRoute
+  '/en/': typeof EnIndexRoute
+  '/es/': typeof EsIndexRoute
+  '/fr/': typeof FrIndexRoute
+  '/hi/': typeof HiIndexRoute
+  '/pt/': typeof PtIndexRoute
+  '/ru/': typeof RuIndexRoute
+  '/tr/': typeof TrIndexRoute
+  '/zh/': typeof ZhIndexRoute
   '/api/agent/$': typeof ApiAgentSplatRoute
   '/api/public/ceyo-jobs': typeof ApiPublicCeyoJobsRoute
   '/api/public/ceyo-routines': typeof ApiPublicCeyoRoutinesRoute
@@ -491,9 +624,9 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/subscription-terms': typeof SubscriptionTermsRoute
   '/terms': typeof TermsRoute
-  '/ai/$slug': typeof AiSlugRoute
   '/api/anything': typeof ApiAnythingRoute
   '/api/billing': typeof ApiBillingRoute
   '/api/call-followup': typeof ApiCallFollowupRoute
@@ -523,8 +656,27 @@ export interface FileRoutesByTo {
   '/api/wallet': typeof ApiWalletRoute
   '/api/wallet-action': typeof ApiWalletActionRoute
   '/api/web-search': typeof ApiWebSearchRoute
+  '/ar/$country': typeof ArCountryRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
-  '/ai': typeof AiIndexRoute
+  '/de/$country': typeof DeCountryRoute
+  '/en/$country': typeof EnCountryRoute
+  '/es/$country': typeof EsCountryRoute
+  '/fr/$country': typeof FrCountryRoute
+  '/hi/$country': typeof HiCountryRoute
+  '/pt/$country': typeof PtCountryRoute
+  '/ru/$country': typeof RuCountryRoute
+  '/tr/$country': typeof TrCountryRoute
+  '/zh/$country': typeof ZhCountryRoute
+  '/ar': typeof ArIndexRoute
+  '/de': typeof DeIndexRoute
+  '/en': typeof EnIndexRoute
+  '/es': typeof EsIndexRoute
+  '/fr': typeof FrIndexRoute
+  '/hi': typeof HiIndexRoute
+  '/pt': typeof PtIndexRoute
+  '/ru': typeof RuIndexRoute
+  '/tr': typeof TrIndexRoute
+  '/zh': typeof ZhIndexRoute
   '/api/agent/$': typeof ApiAgentSplatRoute
   '/api/public/ceyo-jobs': typeof ApiPublicCeyoJobsRoute
   '/api/public/ceyo-routines': typeof ApiPublicCeyoRoutinesRoute
@@ -560,9 +712,9 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/subscription-terms': typeof SubscriptionTermsRoute
   '/terms': typeof TermsRoute
-  '/ai/$slug': typeof AiSlugRoute
   '/api/anything': typeof ApiAnythingRoute
   '/api/billing': typeof ApiBillingRoute
   '/api/call-followup': typeof ApiCallFollowupRoute
@@ -592,8 +744,27 @@ export interface FileRoutesById {
   '/api/wallet': typeof ApiWalletRoute
   '/api/wallet-action': typeof ApiWalletActionRoute
   '/api/web-search': typeof ApiWebSearchRoute
+  '/ar/$country': typeof ArCountryRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
-  '/ai/': typeof AiIndexRoute
+  '/de/$country': typeof DeCountryRoute
+  '/en/$country': typeof EnCountryRoute
+  '/es/$country': typeof EsCountryRoute
+  '/fr/$country': typeof FrCountryRoute
+  '/hi/$country': typeof HiCountryRoute
+  '/pt/$country': typeof PtCountryRoute
+  '/ru/$country': typeof RuCountryRoute
+  '/tr/$country': typeof TrCountryRoute
+  '/zh/$country': typeof ZhCountryRoute
+  '/ar/': typeof ArIndexRoute
+  '/de/': typeof DeIndexRoute
+  '/en/': typeof EnIndexRoute
+  '/es/': typeof EsIndexRoute
+  '/fr/': typeof FrIndexRoute
+  '/hi/': typeof HiIndexRoute
+  '/pt/': typeof PtIndexRoute
+  '/ru/': typeof RuIndexRoute
+  '/tr/': typeof TrIndexRoute
+  '/zh/': typeof ZhIndexRoute
   '/api/agent/$': typeof ApiAgentSplatRoute
   '/api/public/ceyo-jobs': typeof ApiPublicCeyoJobsRoute
   '/api/public/ceyo-routines': typeof ApiPublicCeyoRoutinesRoute
@@ -630,9 +801,9 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/security'
+    | '/sitemap.xml'
     | '/subscription-terms'
     | '/terms'
-    | '/ai/$slug'
     | '/api/anything'
     | '/api/billing'
     | '/api/call-followup'
@@ -662,8 +833,27 @@ export interface FileRouteTypes {
     | '/api/wallet'
     | '/api/wallet-action'
     | '/api/web-search'
+    | '/ar/$country'
     | '/auth/native-return'
-    | '/ai/'
+    | '/de/$country'
+    | '/en/$country'
+    | '/es/$country'
+    | '/fr/$country'
+    | '/hi/$country'
+    | '/pt/$country'
+    | '/ru/$country'
+    | '/tr/$country'
+    | '/zh/$country'
+    | '/ar/'
+    | '/de/'
+    | '/en/'
+    | '/es/'
+    | '/fr/'
+    | '/hi/'
+    | '/pt/'
+    | '/ru/'
+    | '/tr/'
+    | '/zh/'
     | '/api/agent/$'
     | '/api/public/ceyo-jobs'
     | '/api/public/ceyo-routines'
@@ -698,9 +888,9 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/security'
+    | '/sitemap.xml'
     | '/subscription-terms'
     | '/terms'
-    | '/ai/$slug'
     | '/api/anything'
     | '/api/billing'
     | '/api/call-followup'
@@ -730,8 +920,27 @@ export interface FileRouteTypes {
     | '/api/wallet'
     | '/api/wallet-action'
     | '/api/web-search'
+    | '/ar/$country'
     | '/auth/native-return'
-    | '/ai'
+    | '/de/$country'
+    | '/en/$country'
+    | '/es/$country'
+    | '/fr/$country'
+    | '/hi/$country'
+    | '/pt/$country'
+    | '/ru/$country'
+    | '/tr/$country'
+    | '/zh/$country'
+    | '/ar'
+    | '/de'
+    | '/en'
+    | '/es'
+    | '/fr'
+    | '/hi'
+    | '/pt'
+    | '/ru'
+    | '/tr'
+    | '/zh'
     | '/api/agent/$'
     | '/api/public/ceyo-jobs'
     | '/api/public/ceyo-routines'
@@ -766,9 +975,9 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/security'
+    | '/sitemap.xml'
     | '/subscription-terms'
     | '/terms'
-    | '/ai/$slug'
     | '/api/anything'
     | '/api/billing'
     | '/api/call-followup'
@@ -798,8 +1007,27 @@ export interface FileRouteTypes {
     | '/api/wallet'
     | '/api/wallet-action'
     | '/api/web-search'
+    | '/ar/$country'
     | '/auth/native-return'
-    | '/ai/'
+    | '/de/$country'
+    | '/en/$country'
+    | '/es/$country'
+    | '/fr/$country'
+    | '/hi/$country'
+    | '/pt/$country'
+    | '/ru/$country'
+    | '/tr/$country'
+    | '/zh/$country'
+    | '/ar/'
+    | '/de/'
+    | '/en/'
+    | '/es/'
+    | '/fr/'
+    | '/hi/'
+    | '/pt/'
+    | '/ru/'
+    | '/tr/'
+    | '/zh/'
     | '/api/agent/$'
     | '/api/public/ceyo-jobs'
     | '/api/public/ceyo-routines'
@@ -835,9 +1063,9 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   SecurityRoute: typeof SecurityRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SubscriptionTermsRoute: typeof SubscriptionTermsRoute
   TermsRoute: typeof TermsRoute
-  AiSlugRoute: typeof AiSlugRoute
   ApiAnythingRoute: typeof ApiAnythingRoute
   ApiBillingRoute: typeof ApiBillingRoute
   ApiCallFollowupRoute: typeof ApiCallFollowupRoute
@@ -867,8 +1095,27 @@ export interface RootRouteChildren {
   ApiWalletRoute: typeof ApiWalletRoute
   ApiWalletActionRoute: typeof ApiWalletActionRoute
   ApiWebSearchRoute: typeof ApiWebSearchRoute
+  ArCountryRoute: typeof ArCountryRoute
   AuthNativeReturnRoute: typeof AuthNativeReturnRoute
-  AiIndexRoute: typeof AiIndexRoute
+  DeCountryRoute: typeof DeCountryRoute
+  EnCountryRoute: typeof EnCountryRoute
+  EsCountryRoute: typeof EsCountryRoute
+  FrCountryRoute: typeof FrCountryRoute
+  HiCountryRoute: typeof HiCountryRoute
+  PtCountryRoute: typeof PtCountryRoute
+  RuCountryRoute: typeof RuCountryRoute
+  TrCountryRoute: typeof TrCountryRoute
+  ZhCountryRoute: typeof ZhCountryRoute
+  ArIndexRoute: typeof ArIndexRoute
+  DeIndexRoute: typeof DeIndexRoute
+  EnIndexRoute: typeof EnIndexRoute
+  EsIndexRoute: typeof EsIndexRoute
+  FrIndexRoute: typeof FrIndexRoute
+  HiIndexRoute: typeof HiIndexRoute
+  PtIndexRoute: typeof PtIndexRoute
+  RuIndexRoute: typeof RuIndexRoute
+  TrIndexRoute: typeof TrIndexRoute
+  ZhIndexRoute: typeof ZhIndexRoute
   ApiAgentSplatRoute: typeof ApiAgentSplatRoute
   ApiPublicCeyoJobsRoute: typeof ApiPublicCeyoJobsRoute
   ApiPublicCeyoRoutinesRoute: typeof ApiPublicCeyoRoutinesRoute
@@ -959,6 +1206,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/subscription-terms': {
       id: '/subscription-terms'
       path: '/subscription-terms'
@@ -971,20 +1225,6 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ai/': {
-      id: '/ai/'
-      path: '/ai'
-      fullPath: '/ai/'
-      preLoaderRoute: typeof AiIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ai/$slug': {
-      id: '/ai/$slug'
-      path: '/ai/$slug'
-      fullPath: '/ai/$slug'
-      preLoaderRoute: typeof AiSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/anything': {
@@ -1190,11 +1430,151 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiWebSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ar/': {
+      id: '/ar/'
+      path: '/ar'
+      fullPath: '/ar/'
+      preLoaderRoute: typeof ArIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ar/$country': {
+      id: '/ar/$country'
+      path: '/ar/$country'
+      fullPath: '/ar/$country'
+      preLoaderRoute: typeof ArCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/native-return': {
       id: '/auth/native-return'
       path: '/auth/native-return'
       fullPath: '/auth/native-return'
       preLoaderRoute: typeof AuthNativeReturnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/de/': {
+      id: '/de/'
+      path: '/de'
+      fullPath: '/de/'
+      preLoaderRoute: typeof DeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/de/$country': {
+      id: '/de/$country'
+      path: '/de/$country'
+      fullPath: '/de/$country'
+      preLoaderRoute: typeof DeCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/': {
+      id: '/en/'
+      path: '/en'
+      fullPath: '/en/'
+      preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/$country': {
+      id: '/en/$country'
+      path: '/en/$country'
+      fullPath: '/en/$country'
+      preLoaderRoute: typeof EnCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/': {
+      id: '/es/'
+      path: '/es'
+      fullPath: '/es/'
+      preLoaderRoute: typeof EsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/es/$country': {
+      id: '/es/$country'
+      path: '/es/$country'
+      fullPath: '/es/$country'
+      preLoaderRoute: typeof EsCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fr/': {
+      id: '/fr/'
+      path: '/fr'
+      fullPath: '/fr/'
+      preLoaderRoute: typeof FrIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fr/$country': {
+      id: '/fr/$country'
+      path: '/fr/$country'
+      fullPath: '/fr/$country'
+      preLoaderRoute: typeof FrCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hi/': {
+      id: '/hi/'
+      path: '/hi'
+      fullPath: '/hi/'
+      preLoaderRoute: typeof HiIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hi/$country': {
+      id: '/hi/$country'
+      path: '/hi/$country'
+      fullPath: '/hi/$country'
+      preLoaderRoute: typeof HiCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pt/': {
+      id: '/pt/'
+      path: '/pt'
+      fullPath: '/pt/'
+      preLoaderRoute: typeof PtIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pt/$country': {
+      id: '/pt/$country'
+      path: '/pt/$country'
+      fullPath: '/pt/$country'
+      preLoaderRoute: typeof PtCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ru/': {
+      id: '/ru/'
+      path: '/ru'
+      fullPath: '/ru/'
+      preLoaderRoute: typeof RuIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ru/$country': {
+      id: '/ru/$country'
+      path: '/ru/$country'
+      fullPath: '/ru/$country'
+      preLoaderRoute: typeof RuCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tr/': {
+      id: '/tr/'
+      path: '/tr'
+      fullPath: '/tr/'
+      preLoaderRoute: typeof TrIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tr/$country': {
+      id: '/tr/$country'
+      path: '/tr/$country'
+      fullPath: '/tr/$country'
+      preLoaderRoute: typeof TrCountryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/zh/': {
+      id: '/zh/'
+      path: '/zh'
+      fullPath: '/zh/'
+      preLoaderRoute: typeof ZhIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/zh/$country': {
+      id: '/zh/$country'
+      path: '/zh/$country'
+      fullPath: '/zh/$country'
+      preLoaderRoute: typeof ZhCountryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/agent/$': {
@@ -1371,9 +1751,9 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   SecurityRoute: SecurityRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SubscriptionTermsRoute: SubscriptionTermsRoute,
   TermsRoute: TermsRoute,
-  AiSlugRoute: AiSlugRoute,
   ApiAnythingRoute: ApiAnythingRoute,
   ApiBillingRoute: ApiBillingRoute,
   ApiCallFollowupRoute: ApiCallFollowupRoute,
@@ -1403,8 +1783,27 @@ const rootRouteChildren: RootRouteChildren = {
   ApiWalletRoute: ApiWalletRoute,
   ApiWalletActionRoute: ApiWalletActionRoute,
   ApiWebSearchRoute: ApiWebSearchRoute,
+  ArCountryRoute: ArCountryRoute,
   AuthNativeReturnRoute: AuthNativeReturnRoute,
-  AiIndexRoute: AiIndexRoute,
+  DeCountryRoute: DeCountryRoute,
+  EnCountryRoute: EnCountryRoute,
+  EsCountryRoute: EsCountryRoute,
+  FrCountryRoute: FrCountryRoute,
+  HiCountryRoute: HiCountryRoute,
+  PtCountryRoute: PtCountryRoute,
+  RuCountryRoute: RuCountryRoute,
+  TrCountryRoute: TrCountryRoute,
+  ZhCountryRoute: ZhCountryRoute,
+  ArIndexRoute: ArIndexRoute,
+  DeIndexRoute: DeIndexRoute,
+  EnIndexRoute: EnIndexRoute,
+  EsIndexRoute: EsIndexRoute,
+  FrIndexRoute: FrIndexRoute,
+  HiIndexRoute: HiIndexRoute,
+  PtIndexRoute: PtIndexRoute,
+  RuIndexRoute: RuIndexRoute,
+  TrIndexRoute: TrIndexRoute,
+  ZhIndexRoute: ZhIndexRoute,
   ApiAgentSplatRoute: ApiAgentSplatRoute,
   ApiPublicCeyoJobsRoute: ApiPublicCeyoJobsRoute,
   ApiPublicCeyoRoutinesRoute: ApiPublicCeyoRoutinesRoute,
