@@ -86,7 +86,7 @@ const menu = () => ({
       IDS.slice(i * 3, i * 3 + 3).map((id) => ({ text: `${PROVIDERS[id].icon} ${PROVIDERS[id].label}`, callback_data: `keys:provider:${id}` }))),
   ],
 });
-const marketerMenu = () => ({ inline_keyboard: [[{ text: "📈 إحصائيات صفحتي", callback_data: "mk:stats" }, { text: "👥 المسجلين من صفحتي", callback_data: "mk:users" }]] });
+const marketerMenu = () => ({ inline_keyboard: [[{ text: "📈 My page stats", callback_data: "mk:stats" }, { text: "👥 My signups", callback_data: "mk:users" }]] });
 
 const pendingProvider = new Map<number, ProviderId>();
 
@@ -148,8 +148,15 @@ export const Route = createFileRoute("/api/public/telegram-keys")({
           for (const p of pays ?? []) { byCur[p.currency || "?"] = (byCur[p.currency || "?"] ?? 0) + Number(p.amount || 0); usd += Number(p.usd_amount || 0); }
           return { visits: await count("visit"), visitsToday: await count("visit", dayAgo()), signups: await count("signup"), signupsToday: await count("signup", dayAgo()), paid: (pays ?? []).length, byCur, usd, pct };
         };
-        const refLines = (st: Awaited<ReturnType<typeof refStats>>) => {
+        const refLines = (st: Awaited<ReturnType<typeof refStats>>, en = false) => {
           const cur = Object.entries(st.byCur);
+          if (en) return [
+            `👀 Visits: <b>${fmt(st.visits)}</b> (last 24h: ${fmt(st.visitsToday)})`,
+            `👤 Signups: <b>${fmt(st.signups)}</b> (last 24h: ${fmt(st.signupsToday)})`,
+            `💳 Paid subscriptions: <b>${fmt(st.paid)}</b>`,
+            `💰 Revenue: ${cur.length ? cur.map(([c, a]) => `${fmt(a)} ${esc(c)}`).join(" + ") : "0"}${st.usd ? ` (~$${fmt(st.usd)})` : ""}`,
+            `🤝 Your ${fmt(st.pct)}% share: <b>${cur.length ? cur.map(([c, a]) => `${fmt(marketerShare(a, st.pct))} ${esc(c)}`).join(" + ") : "0"}</b>${st.usd ? ` (~$${fmt(marketerShare(st.usd, st.pct))})` : ""}`,
+          ];
           return [
             `👀 الزيارات: <b>${fmt(st.visits)}</b> (آخر 24 ساعة: ${fmt(st.visitsToday)})`,
             `👤 التسجيلات: <b>${fmt(st.signups)}</b> (آخر 24 ساعة: ${fmt(st.signupsToday)})`,
@@ -169,10 +176,10 @@ export const Route = createFileRoute("/api/public/telegram-keys")({
           const data = String(update?.callback_query?.data ?? update?.message?.text ?? "");
           if (/users/.test(data)) {
             const rows = await refUsers(code);
-            await send(chatId, ["👥 <b>آخر المسجلين من صفحتك</b>", "", ...(rows.length ? rows.map((r: any, i: number) => `${i + 1}. ${esc(r.display_name || r.username || "مستخدم")} — ${String(r.created_at).slice(0, 10)}`) : ["لسه مفيش"])].join("\n"), marketerMenu());
+            await send(chatId, ["👥 <b>Latest signups from your page</b>", "", ...(rows.length ? rows.map((r: any, i: number) => `${i + 1}. ${esc(r.display_name || r.username || "User")} — ${String(r.created_at).slice(0, 10)}`) : ["None yet"])].join("\n"), marketerMenu());
           } else {
             const st = await refStats(code);
-            await send(chatId, [`📈 <b>إحصائيات صفحتك</b>`, `🔗 https://${esc(code)}.ceyo.app`, "", ...refLines(st), "", "هيوصلك إشعار هنا مع كل تسجيل أو اشتراك من صفحتك."].join("\n"), marketerMenu());
+            await send(chatId, [`📈 <b>Your page stats</b>`, `🔗 https://${esc(code)}.ceyo.app`, "", ...refLines(st, true), "", "You will be notified here for every signup or subscription from your page."].join("\n"), marketerMenu());
           }
           return Response.json({ ok: true });
         }
@@ -238,12 +245,12 @@ export const Route = createFileRoute("/api/public/telegram-keys")({
         };
         const showUsers = async () => {
           const { data } = await db.from("profiles").select("display_name,username,referred_by,created_at").order("created_at", { ascending: false }).limit(20);
-          await send(chatId, ["👥 <b>آخر المسجلين</b>", "", ...(data ?? []).map((r: any, i: number) => `${i + 1}. ${esc(r.display_name || r.username || "مستخدم")}${r.referred_by ? ` 🔗${esc(r.referred_by)}` : ""} — ${String(r.created_at).slice(0, 10)}`)].join("\n"), menu());
+          await send(chatId, ["👥 <b>آخر المسجلين</b>", "", ...(data ?? []).map((r: any, i: number) => `${i + 1}. ${esc(r.display_name || r.username || "User")}${r.referred_by ? ` 🔗${esc(r.referred_by)}` : ""} — ${String(r.created_at).slice(0, 10)}`)].join("\n"), menu());
         };
         const showPayments = async () => {
           const { data } = await db.from("payment_orders").select("tier,interval,amount,currency,status,provider,updated_at").order("updated_at", { ascending: false }).limit(20);
           const icon = (s: string) => (s === "paid" ? "✅" : s === "pending" ? "⏳" : "❌");
-          await send(chatId, ["💰 <b>آخر المدفوعات</b>", "", ...((data ?? []).length ? data.map((r: any) => `${icon(r.status)} ${esc(r.tier)}/${esc(r.interval)} — ${fmt(Number(r.amount))} ${esc(r.currency)} (${esc(r.provider)}) ${String(r.updated_at).slice(0, 10)}`) : ["لسه مفيش"])].join("\n"), menu());
+          await send(chatId, ["💰 <b>آخر المدفوعات</b>", "", ...((data ?? []).length ? data.map((r: any) => `${icon(r.status)} ${esc(r.tier)}/${esc(r.interval)} — ${fmt(Number(r.amount))} ${esc(r.currency)} (${esc(r.provider)}) ${String(r.updated_at).slice(0, 10)}`) : ["None yet"])].join("\n"), menu());
         };
         const showMarketers = async () => {
           const { data } = await db.from("referral_marketers").select("code,telegram_username");
