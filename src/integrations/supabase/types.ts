@@ -1649,6 +1649,7 @@ export type Database = {
           onboarding_completed: boolean
           phone_e164: string | null
           primary_bot_id: string | null
+          referred_by: string | null
           updated_at: string
           user_type: string | null
           username: string | null
@@ -1663,6 +1664,7 @@ export type Database = {
           onboarding_completed?: boolean
           phone_e164?: string | null
           primary_bot_id?: string | null
+          referred_by?: string | null
           updated_at?: string
           user_type?: string | null
           username?: string | null
@@ -1677,6 +1679,7 @@ export type Database = {
           onboarding_completed?: boolean
           phone_e164?: string | null
           primary_bot_id?: string | null
+          referred_by?: string | null
           updated_at?: string
           user_type?: string | null
           username?: string | null
@@ -1724,6 +1727,63 @@ export type Database = {
           last_used_at?: string | null
           provider?: string
           status?: string
+        }
+        Relationships: []
+      }
+      referral_events: {
+        Row: {
+          amount: number | null
+          code: string
+          created_at: string
+          currency: string | null
+          event: string
+          id: string
+          order_id: string | null
+          usd_amount: number | null
+          user_id: string | null
+        }
+        Insert: {
+          amount?: number | null
+          code: string
+          created_at?: string
+          currency?: string | null
+          event: string
+          id?: string
+          order_id?: string | null
+          usd_amount?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number | null
+          code?: string
+          created_at?: string
+          currency?: string | null
+          event?: string
+          id?: string
+          order_id?: string | null
+          usd_amount?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      referral_marketers: {
+        Row: {
+          code: string
+          created_at: string
+          share_percent: number
+          telegram_username: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          share_percent?: number
+          telegram_username: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          share_percent?: number
+          telegram_username?: string
         }
         Relationships: []
       }
@@ -1817,6 +1877,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      telegram_operators: {
+        Row: {
+          chat_id: number | null
+          created_at: string
+          marketer_code: string | null
+          role: string
+          username: string
+        }
+        Insert: {
+          chat_id?: number | null
+          created_at?: string
+          marketer_code?: string | null
+          role: string
+          username: string
+        }
+        Update: {
+          chat_id?: number | null
+          created_at?: string
+          marketer_code?: string | null
+          role?: string
+          username?: string
+        }
+        Relationships: []
       }
       telephony_settings: {
         Row: {
@@ -2191,6 +2275,14 @@ export type Database = {
       }
       store_telegram_bot_token: {
         Args: { p_token: string }
+        Returns: undefined
+      }
+      tg_notify: {
+        Args: { p_chat_id: number; p_text: string }
+        Returns: undefined
+      }
+      tg_notify_role: {
+        Args: { p_code: string; p_role: string; p_text: string }
         Returns: undefined
       }
       wallet_encryption_key: { Args: { p_candidate: string }; Returns: string }
