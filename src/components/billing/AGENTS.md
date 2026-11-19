@@ -1,0 +1,4 @@
+- CheckoutSheet portals only CheckoutBox over the mounted pricing page: bottom-aligned on mobile, centered on desktop, with scoped checkout-box.css and no photographic payment page. Why: closing checkout must preserve the selected plan and pricing scroll while all payment stages stay in one box.
+- International payments dynamically load the official Dodo inline SDK with manualRedirect enabled; SDK events never activate plans, and polling retains server verification. Why: payment stays embedded without client-side entitlement grants.
+- CheckoutBox starts with method choices and invokes details on selection; choices stay disabled until the country quote loads. Why: Subscribe must not require a second summary/Subscribe step or choose the wrong provider before detection.
+- On Android CheckoutSheet renders nothing of its own: Google Play's sheet only, with results as a toast. Why: the owner does not want the web checkout card inside the store app.

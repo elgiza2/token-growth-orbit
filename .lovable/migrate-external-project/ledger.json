@@ -1,0 +1,37 @@
+[
+ {
+  "capability": "code",
+  "source": "github elgiza2/supa-database-bridge",
+  "outcome": "copied as-is (same Lovable TanStack template)",
+  "status": "migrated",
+  "next_action": "none"
+ },
+ {
+  "capability": "database schema and records",
+  "source": "user's Supabase project (same project id as source)",
+  "outcome": "kept: this project is connected to the same Supabase project",
+  "status": "verified",
+  "next_action": "none"
+ },
+ {
+  "capability": "auth identities",
+  "source": "same Supabase project",
+  "outcome": "kept; users and sessions unchanged",
+  "status": "migrated",
+  "next_action": "user sign-in check"
+ },
+ {
+  "capability": "edge functions",
+  "source": "supabase/functions",
+  "outcome": "code copied; already deployed on the user's Supabase",
+  "status": "migrated",
+  "next_action": "redeploy only if changed"
+ },
+ {
+  "capability": "server secrets",
+  "source": "user's Supabase (provider_api_keys pool + Vault)",
+  "outcome": "AI/voice/browser/wallet/cron keys confirmed in Supabase and read directly by the app",
+  "status": "verified",
+  "next_action": "DODO_PAYMENTS_API_KEY (site checkout) and GITHUB_TOKEN are only read from project secrets; add if needed"
+ }
+]

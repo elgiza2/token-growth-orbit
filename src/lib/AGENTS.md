@@ -1,0 +1,1 @@
+- offlineCache.ts: returning-account startup renders owner-bound megsy_cache_ entries (workspace, recent chat events, thread ids, onboarding flag) then refreshes in the background; cleared on sign-out/account switch. Why: owner requires instant open without loaders.
