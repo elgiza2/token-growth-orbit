@@ -10,8 +10,8 @@ export const attributeReferral = createServerFn({ method: "POST" })
     if (!data.code) return { ok: false };
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const db = supabaseAdmin as any;
-    const { data: profile } = await db.from("profiles").select("referred_by").eq("id", context.userId).maybeSingle();
+    const { data: profile } = await db.from("profiles").select("referred_by").eq("id", context!.userId).maybeSingle();
     if (!profile || profile.referred_by) return { ok: !!profile?.referred_by };
-    await db.from("profiles").update({ referred_by: data.code }).eq("id", context.userId).is("referred_by", null);
+    await db.from("profiles").update({ referred_by: data.code }).eq("id", context!.userId).is("referred_by", null);
     return { ok: true };
   });

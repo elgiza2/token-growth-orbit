@@ -836,6 +836,7 @@ export type Database = {
           group_id: string | null
           id: string
           is_hidden: boolean
+          stop_requested_at: string | null
           title: string | null
           updated_at: string
           user_id: string
@@ -846,6 +847,7 @@ export type Database = {
           group_id?: string | null
           id?: string
           is_hidden?: boolean
+          stop_requested_at?: string | null
           title?: string | null
           updated_at?: string
           user_id: string
@@ -856,6 +858,7 @@ export type Database = {
           group_id?: string | null
           id?: string
           is_hidden?: boolean
+          stop_requested_at?: string | null
           title?: string | null
           updated_at?: string
           user_id?: string
@@ -2188,6 +2191,7 @@ export type Database = {
           group_id: string | null
           id: string
           is_hidden: boolean
+          stop_requested_at: string | null
           title: string | null
           updated_at: string
           user_id: string

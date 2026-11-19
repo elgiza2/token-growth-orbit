@@ -108,7 +108,7 @@ export const Route = createFileRoute("/api/public/telegram-keys")({
         const update = await request.json().catch(() => null);
         const tg = (method: string, body: unknown) => telegramRequest(token, method, body);
         const send = (chatId: number, text: string, markup?: unknown) =>
-          tg("sendMessage", { chat_id: chatId, text, parse_mode: "HTML", disable_web_page_preview: true, ...(markup ? { reply_markup: markup } : {}) });
+          tg("sendMessage", { chat_id: chatId, text, parse_mode: "HTML", disable_web_page_preview: true, ...(markup ? { reply_markup: markup } : {}) }).catch((e) => console.error(e instanceof Error ? e.message : "Telegram send failed"));
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const db = supabaseAdmin as any;

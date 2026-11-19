@@ -79,6 +79,18 @@ const toSession = (c: any): SessionInfo => ({ id: c.id, agentId: c.bot_id || "",
 type Live = { ctl: AbortController; events: RawEvent[]; subs: Set<(e: RawEvent) => void> };
 const running = new Map<string, Live>();
 
+/** The server keeps working after the connection drops (app closed, phone locked):
+ *  wait for the saved answer instead of reporting a failure. */
+async function waitForSavedReply(sessionId: string, signal: AbortSignal): Promise<boolean> {
+  const since = new Date(Date.now() - 5000).toISOString();
+  for (let i = 0; i < 200 && !signal.aborted; i++) {
+    await new Promise((r) => setTimeout(r, i < 10 ? 2000 : 4000));
+    const { data } = await db.from("messages").select("id").eq("conversation_id", sessionId).eq("role", "assistant").gt("created_at", since).limit(1).maybeSingle();
+    if (data) return true;
+  }
+  return false;
+}
+
 async function startReply(sessionId: string) {
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
@@ -104,6 +116,7 @@ async function startReply(sessionId: string) {
       await readEventStream(res.body, (e) => { push(e); });
     } catch (e: any) {
       if (live.ctl.signal.aborted) push({ id: crypto.randomUUID(), type: "session.status_idle", stop_reason: { type: "interrupted" } });
+      else if (await waitForSavedReply(sessionId, live.ctl.signal)) push({ id: crypto.randomUUID(), type: "session.status_idle", stop_reason: { type: "end_turn" } });
       else push({ id: crypto.randomUUID(), type: "session.error", message: /^(fetch failed|failed to fetch|network|load failed)/i.test(String(e?.message)) ? "The connection dropped for a moment. Send it again and I'll pick up where I left off." : "Something went wrong. Please send it again." } as RawEvent);
     } finally {
       if (running.get(sessionId) === live) running.delete(sessionId);
@@ -355,6 +368,8 @@ export const agentApi = {
   send: (id: string, text: string, images?: string[], messageId?: string, origin?: RecordingOrigin) => addUserMessage(id, text, images, messageId, origin),
   sendInternal: (id: string, text: string) => addUserMessage(id, text, [], crypto.randomUUID(), {}, true),
   interrupt: async (id: string) => {
+    // Leaving the chat never stops the reply; only this explicit stop does.
+    await db.from("conversations").update({ stop_requested_at: new Date().toISOString() }).eq("id", id);
     running.get(id)?.ctl.abort();
     return { status: "idle" };
   },
