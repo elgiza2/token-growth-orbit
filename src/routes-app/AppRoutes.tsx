@@ -33,7 +33,7 @@ export const AppRoutes = (_props: { currentUserId: string | null }) => (
   <>
     <Route path="/" element={guard(<OnboardingGate><AgentHubPage /></OnboardingGate>, "/auth?mode=signup")} />
     <Route path="/index" element={guard(<OnboardingGate><AgentHubPage /></OnboardingGate>, "/auth?mode=signup")} />
-    <Route path="/welcome" element={<Navigate to="/auth?mode=signup" replace />} />
+    <Route path="/welcome" element={guard(home, "/auth?mode=signup")} />
     <Route path="/landing" element={<Navigate to="/auth?mode=signup" replace />} />
     <Route path="/onboarding" element={guard(<OnboardingPage />)} />
 
