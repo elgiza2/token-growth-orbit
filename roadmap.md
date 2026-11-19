@@ -1,3 +1,15 @@
+## Marketer page matra.ceyo.app, Telegram admin bot, chat keeps running — 2026-11-19
+- [x] Import repo into this project (own Supabase, no Lovable Cloud).
+- [x] matra.ceyo.app landing: counts visits, links carry ?ref=matra, signups linked to marketer once.
+- [x] Telegram bot (@Ceyomangerbot, token in Vault): @eIgiza = full admin (stats, users, payments, marketers, all provider keys); @Raved01 = only his page stats; 50% share shown.
+- [x] Notifications: admin gets every signup/payment; marketer only his own (database triggers).
+- [x] Provider keys: load spread + automatic cooldown/switch on failure (E2B, Browserbase wired; Cerebras has its own).
+- [x] Free plan copy: only 1,000,000 tokens per day.
+- [x] Chat reply keeps running after leaving the chat; stops only on the stop button.
+- [ ] Point DNS matra.ceyo.app to the hosting + publish (owner).
+- [ ] @eIgiza and @Raved01 must press Start in the bot once so it can message them (owner).
+- [ ] Move bot webhook to the production host after publish (currently the Lovable dev URL).
+
 ## Google Play confirmation, Android checkout card and web trial — 2026-11-18
 - [x] Server confirms (acknowledges) every verified Google Play subscription so Play stops showing "developer hasn't confirmed" and does not refund it (4 unit tests).
 - [x] Android app recovers earlier unconfirmed Play purchases at sign-in and before checkout (native `restore` added to CeyoPlayBillingPlugin).
