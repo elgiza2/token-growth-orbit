@@ -8,6 +8,7 @@ import { PLAN_PRICES } from "@/lib/payments/plans";
 import { COUNTRIES, LANG_NAMES, PAGE_LANGS, countryName, type Country } from "./localePages";
 import { LANDING_I18N } from "./landingI18n";
 import { COUNTRY_PROFILES } from "./countryProfiles";
+import { TOOLS } from "@/components/compare/tools";
 
 const esc = (v: string) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 const orb = (color: string, size: number, state = "idle") => `<span class="o" data-c="${color}" data-s="${size}" data-st="${state}"></span>`;
@@ -104,9 +105,10 @@ export function buildLandingHtml(o: LandingOptions): string {
   if (o.seo) {
     const link = (path: string, label: string) => `<a href="${path}" target="_top">${esc(label)}</a>`;
     const langs = PAGE_LANGS.map((l) => link(`/${l}${o.country ? `/${o.country.code}` : ""}`, LANG_NAMES[l])).join("");
-    const places = `<div class="place-cards">${COUNTRIES.map((c) => { const p = COUNTRY_PROFILES[c.code]; const n = countryName(c, lang, LANDING_I18N[lang]?.countries); return `<a class="place-card" href="/${lang}/${c.code}" target="_top"><img src="${esc(p?.img ?? "")}" alt="${esc(p?.place ?? n)}" loading="lazy" width="1200" height="630"><span>${esc(n)}</span></a>`; }).join("")}</div>`;
-    const block = `<section class="section" id="places"><div class="wrap"><div class="center reveal"><h2>${esc(t.elsewhere)}</h2></div>${places}<nav class="locale-links" aria-label="${esc(t.languages)}">${langs}</nav></div></section>`;
-    html = html.replace("</main>", `${block}</main>`).replace("</style>", ".locale-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}.locale-links a{padding:8px 14px;border-radius:999px;background:var(--soft);font-size:14px;color:var(--muted)}.locale-links a:hover{color:var(--ink)}.place-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:24px}.place-card{position:relative;display:block;border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:var(--soft)}.place-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.place-card:hover img{transform:scale(1.06)}.place-card span{position:absolute;inset:auto 0 0;padding:28px 12px 10px;font-size:14px;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.65))}.local-grid{display:grid;gap:32px;align-items:center}@media(min-width:860px){.local-grid{grid-template-columns:1.1fr 1fr}}.local-photo{margin:0;border-radius:24px;overflow:hidden;background:var(--soft)}.local-photo img{width:100%;height:auto;display:block}.local-photo figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}.local-uses{list-style:none;padding:0;margin:20px 0 24px;display:grid;gap:12px}.local-uses li{display:flex;gap:12px;align-items:center;font-size:17px}</style>");
+    const countries = COUNTRIES.map((c) => link(`/${lang}/${c.code}`, countryName(c, lang, LANDING_I18N[lang]?.countries))).join("");
+    const compares = TOOLS.map((x) => link(`/compare/${x.slug}`, `Ceyo vs ${x.name}`)).join("");
+    const block = `<div class="f-links"><nav aria-label="${esc(t.elsewhere)}"><h3>${esc(t.elsewhere)}</h3><div>${countries}</div></nav><nav aria-label="${esc(t.languages)}"><h3>${esc(t.languages)}</h3><div>${langs}</div></nav><nav aria-label="Compare"><h3>Compare</h3><div>${compares}</div></nav></div>`;
+    html = html.replace("</div>\n</footer>", `</div>\n${block}</footer>`).replace("</style>", ".f-links{position:relative;z-index:2;display:grid;gap:22px;padding:0 clamp(20px,5vw,64px) 40px}.f-links h3{font-size:13px;font-weight:500;opacity:.7;margin:0 0 10px;text-transform:uppercase;letter-spacing:.05em}.f-links div{display:flex;flex-wrap:wrap;gap:6px 18px}.f-links a{font-size:13px;opacity:.85}.f-links a:hover{opacity:1;text-decoration:underline}.local-grid{display:grid;gap:32px;align-items:center}@media(min-width:860px){.local-grid{grid-template-columns:1.1fr 1fr}}.local-photo{margin:0;border-radius:24px;overflow:hidden;background:var(--soft)}.local-photo img{width:100%;height:auto;display:block}.local-photo figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}.local-uses{list-style:none;padding:0;margin:20px 0 24px;display:grid;gap:12px}.local-uses li{display:flex;gap:12px;align-items:center;font-size:17px}</style>");
   }
 
   html = html
