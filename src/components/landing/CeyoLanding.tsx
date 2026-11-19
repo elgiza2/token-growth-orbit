@@ -10,7 +10,7 @@ const LANG_KEY = "ceyo-landing-lang";
 export default function CeyoLanding() {
   const frame = useRef<HTMLIFrameElement>(null);
   const [lang, setLang] = useState<LandingLang>(() =>
-    detectLandingLang(localStorage.getItem(LANG_KEY), new URLSearchParams(location.search).get("lang"), navigator.language),
+    detectLandingLang(localStorage.getItem(LANG_KEY), new URLSearchParams(location.search).get("lang"), "en"),
   );
 
   const html = useMemo(() => buildLandingHtml({ lang, appLink: (p) => webAppUrl(location.host, location.origin, p) }), [lang]);
