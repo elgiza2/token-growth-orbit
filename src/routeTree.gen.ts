@@ -15,10 +15,13 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ConnectedRouteImport } from './routes/connected'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CookiesRouteImport } from './routes/cookies'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SecurityRouteImport } from './routes/security'
 import { Route as SubscriptionTermsRouteImport } from './routes/subscription-terms'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AiIndexRouteImport } from './routes/ai.index'
+import { Route as AiSlugRouteImport } from './routes/ai.$slug'
 import { Route as ApiAnythingRouteImport } from './routes/api/anything'
 import { Route as ApiBillingRouteImport } from './routes/api/billing'
 import { Route as ApiCallFollowupRouteImport } from './routes/api/call-followup'
@@ -103,6 +106,11 @@ const CookiesRoute = CookiesRouteImport.update({
   path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -121,6 +129,16 @@ const SubscriptionTermsRoute = SubscriptionTermsRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiIndexRoute = AiIndexRouteImport.update({
+  id: '/ai/',
+  path: '/ai/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiSlugRoute = AiSlugRouteImport.update({
+  id: '/ai/$slug',
+  path: '/ai/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAnythingRoute = ApiAnythingRouteImport.update({
@@ -402,10 +420,12 @@ export interface FileRoutesByFullPath {
   '/connected': typeof ConnectedRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/subscription-terms': typeof SubscriptionTermsRoute
   '/terms': typeof TermsRoute
+  '/ai/$slug': typeof AiSlugRoute
   '/api/anything': typeof ApiAnythingRoute
   '/api/billing': typeof ApiBillingRoute
   '/api/call-followup': typeof ApiCallFollowupRoute
@@ -436,6 +456,7 @@ export interface FileRoutesByFullPath {
   '/api/wallet-action': typeof ApiWalletActionRoute
   '/api/web-search': typeof ApiWebSearchRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
+  '/ai/': typeof AiIndexRoute
   '/api/agent/$': typeof ApiAgentSplatRoute
   '/api/public/ceyo-jobs': typeof ApiPublicCeyoJobsRoute
   '/api/public/ceyo-routines': typeof ApiPublicCeyoRoutinesRoute
@@ -467,10 +488,12 @@ export interface FileRoutesByTo {
   '/connected': typeof ConnectedRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/subscription-terms': typeof SubscriptionTermsRoute
   '/terms': typeof TermsRoute
+  '/ai/$slug': typeof AiSlugRoute
   '/api/anything': typeof ApiAnythingRoute
   '/api/billing': typeof ApiBillingRoute
   '/api/call-followup': typeof ApiCallFollowupRoute
@@ -501,6 +524,7 @@ export interface FileRoutesByTo {
   '/api/wallet-action': typeof ApiWalletActionRoute
   '/api/web-search': typeof ApiWebSearchRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
+  '/ai': typeof AiIndexRoute
   '/api/agent/$': typeof ApiAgentSplatRoute
   '/api/public/ceyo-jobs': typeof ApiPublicCeyoJobsRoute
   '/api/public/ceyo-routines': typeof ApiPublicCeyoRoutinesRoute
@@ -533,10 +557,12 @@ export interface FileRoutesById {
   '/connected': typeof ConnectedRoute
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
+  '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/security': typeof SecurityRoute
   '/subscription-terms': typeof SubscriptionTermsRoute
   '/terms': typeof TermsRoute
+  '/ai/$slug': typeof AiSlugRoute
   '/api/anything': typeof ApiAnythingRoute
   '/api/billing': typeof ApiBillingRoute
   '/api/call-followup': typeof ApiCallFollowupRoute
@@ -567,6 +593,7 @@ export interface FileRoutesById {
   '/api/wallet-action': typeof ApiWalletActionRoute
   '/api/web-search': typeof ApiWebSearchRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
+  '/ai/': typeof AiIndexRoute
   '/api/agent/$': typeof ApiAgentSplatRoute
   '/api/public/ceyo-jobs': typeof ApiPublicCeyoJobsRoute
   '/api/public/ceyo-routines': typeof ApiPublicCeyoRoutinesRoute
@@ -600,10 +627,12 @@ export interface FileRouteTypes {
     | '/connected'
     | '/contact'
     | '/cookies'
+    | '/pricing'
     | '/privacy'
     | '/security'
     | '/subscription-terms'
     | '/terms'
+    | '/ai/$slug'
     | '/api/anything'
     | '/api/billing'
     | '/api/call-followup'
@@ -634,6 +663,7 @@ export interface FileRouteTypes {
     | '/api/wallet-action'
     | '/api/web-search'
     | '/auth/native-return'
+    | '/ai/'
     | '/api/agent/$'
     | '/api/public/ceyo-jobs'
     | '/api/public/ceyo-routines'
@@ -665,10 +695,12 @@ export interface FileRouteTypes {
     | '/connected'
     | '/contact'
     | '/cookies'
+    | '/pricing'
     | '/privacy'
     | '/security'
     | '/subscription-terms'
     | '/terms'
+    | '/ai/$slug'
     | '/api/anything'
     | '/api/billing'
     | '/api/call-followup'
@@ -699,6 +731,7 @@ export interface FileRouteTypes {
     | '/api/wallet-action'
     | '/api/web-search'
     | '/auth/native-return'
+    | '/ai'
     | '/api/agent/$'
     | '/api/public/ceyo-jobs'
     | '/api/public/ceyo-routines'
@@ -730,10 +763,12 @@ export interface FileRouteTypes {
     | '/connected'
     | '/contact'
     | '/cookies'
+    | '/pricing'
     | '/privacy'
     | '/security'
     | '/subscription-terms'
     | '/terms'
+    | '/ai/$slug'
     | '/api/anything'
     | '/api/billing'
     | '/api/call-followup'
@@ -764,6 +799,7 @@ export interface FileRouteTypes {
     | '/api/wallet-action'
     | '/api/web-search'
     | '/auth/native-return'
+    | '/ai/'
     | '/api/agent/$'
     | '/api/public/ceyo-jobs'
     | '/api/public/ceyo-routines'
@@ -796,10 +832,12 @@ export interface RootRouteChildren {
   ConnectedRoute: typeof ConnectedRoute
   ContactRoute: typeof ContactRoute
   CookiesRoute: typeof CookiesRoute
+  PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   SecurityRoute: typeof SecurityRoute
   SubscriptionTermsRoute: typeof SubscriptionTermsRoute
   TermsRoute: typeof TermsRoute
+  AiSlugRoute: typeof AiSlugRoute
   ApiAnythingRoute: typeof ApiAnythingRoute
   ApiBillingRoute: typeof ApiBillingRoute
   ApiCallFollowupRoute: typeof ApiCallFollowupRoute
@@ -830,6 +868,7 @@ export interface RootRouteChildren {
   ApiWalletActionRoute: typeof ApiWalletActionRoute
   ApiWebSearchRoute: typeof ApiWebSearchRoute
   AuthNativeReturnRoute: typeof AuthNativeReturnRoute
+  AiIndexRoute: typeof AiIndexRoute
   ApiAgentSplatRoute: typeof ApiAgentSplatRoute
   ApiPublicCeyoJobsRoute: typeof ApiPublicCeyoJobsRoute
   ApiPublicCeyoRoutinesRoute: typeof ApiPublicCeyoRoutinesRoute
@@ -899,6 +938,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -925,6 +971,20 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai/': {
+      id: '/ai/'
+      path: '/ai'
+      fullPath: '/ai/'
+      preLoaderRoute: typeof AiIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai/$slug': {
+      id: '/ai/$slug'
+      path: '/ai/$slug'
+      fullPath: '/ai/$slug'
+      preLoaderRoute: typeof AiSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/anything': {
@@ -1308,10 +1368,12 @@ const rootRouteChildren: RootRouteChildren = {
   ConnectedRoute: ConnectedRoute,
   ContactRoute: ContactRoute,
   CookiesRoute: CookiesRoute,
+  PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   SecurityRoute: SecurityRoute,
   SubscriptionTermsRoute: SubscriptionTermsRoute,
   TermsRoute: TermsRoute,
+  AiSlugRoute: AiSlugRoute,
   ApiAnythingRoute: ApiAnythingRoute,
   ApiBillingRoute: ApiBillingRoute,
   ApiCallFollowupRoute: ApiCallFollowupRoute,
@@ -1342,6 +1404,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiWalletActionRoute: ApiWalletActionRoute,
   ApiWebSearchRoute: ApiWebSearchRoute,
   AuthNativeReturnRoute: AuthNativeReturnRoute,
+  AiIndexRoute: AiIndexRoute,
   ApiAgentSplatRoute: ApiAgentSplatRoute,
   ApiPublicCeyoJobsRoute: ApiPublicCeyoJobsRoute,
   ApiPublicCeyoRoutinesRoute: ApiPublicCeyoRoutinesRoute,

@@ -13,8 +13,10 @@ export const Route = createFileRoute("/api/ceyo-chat")({ server: { handlers: {
     const { db, userId } = auth;
     const { data: conv } = await db.from("conversations").select("id,bot_id,group_id").eq("id", input.data.conversationId).eq("user_id", userId).maybeSingle();
     if (!conv) return new Response("Not found", { status: 404 });
-    try { await (await import("@/lib/ceyo/usage.server")).checkUsageAvailable(db); }
+    let status: import("@/lib/ceyo/usage.server").UsageStatus;
+    try { status = await (await import("@/lib/ceyo/usage.server")).getUsageStatus(db); }
     catch (error) { return chatFailure(error instanceof Error ? error.message : "Could not check usage", "usage_unavailable"); }
+    if (!status.hasAccess) return (await import("@/lib/ceyo/subscribeGate.server")).subscribeGateReply(db, userId, conv, status);
     const [{ data: bot }, { data: profile }, { data: rows }] = await Promise.all([
       conv.bot_id ? db.from("bots").select("id,name,instructions").eq("id", conv.bot_id).eq("owner_id", userId).maybeSingle() : Promise.resolve({ data: null }),
       db.from("profiles").select("primary_bot_id").eq("id", userId).maybeSingle(),

@@ -1,3 +1,5 @@
+import { isPlayApp } from "@/lib/native/playBilling";
+import { surfaceFor } from "@/config/domains";
 import { cachedOwner } from "@/lib/offlineCache";
 import { useEffect, useState, useTransition, useDeferredValue } from "react";
 import { Routes, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -156,7 +158,14 @@ export const ProtectedRoute = ({ children, guestEntry }: { children: React.React
     );
   }
   if (!state.authenticated) {
-    if (guestEntry) return <Navigate to={guestEntry} replace />;
+    if (guestEntry) {
+      // Web visitors see features and prices first; the Android app keeps its own sign-in.
+      if (typeof window !== "undefined" && !isPlayApp() && surfaceFor(window.location.host) !== "android") {
+        window.location.replace(`/pricing${location.search}`);
+        return null;
+      }
+      return <Navigate to={guestEntry} replace />;
+    }
     const returnTo = `${location.pathname}${location.search}${location.hash}`;
     const authPath = pathForZone("/auth", location.pathname);
     return <Navigate to={`${authPath}?redirect=${encodeURIComponent(returnTo)}`} replace />;
