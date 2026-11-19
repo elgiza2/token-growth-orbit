@@ -1,0 +1,2 @@
+- Country copy is generated offline by scripts/countries/generate_copy.py, photos added by fetch_photos.py (Wikimedia), then build_index.py rewrites list.ts; only files with complete copy and photos are published. Why: pages ship as static data, no runtime AI or database calls.
+- Designs import only shared.ts helpers and must use real product facts and PLAN_PRICES; no invented stats, testimonials or local prices. Why: published pages must not make false claims.

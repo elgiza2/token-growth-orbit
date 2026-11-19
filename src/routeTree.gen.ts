@@ -55,6 +55,8 @@ import { Route as ArCountryRouteImport } from './routes/ar.$country'
 import { Route as AuthNativeReturnRouteImport } from './routes/auth.native-return'
 import { Route as CompareIndexRouteImport } from './routes/compare.index'
 import { Route as CompareToolRouteImport } from './routes/compare.$tool'
+import { Route as CountriesIndexRouteImport } from './routes/countries.index'
+import { Route as CountriesSlugRouteImport } from './routes/countries.$slug'
 import { Route as DeIndexRouteImport } from './routes/de.index'
 import { Route as DeCountryRouteImport } from './routes/de.$country'
 import { Route as EnIndexRouteImport } from './routes/en.index'
@@ -327,6 +329,16 @@ const CompareToolRoute = CompareToolRouteImport.update({
   path: '/compare/$tool',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CountriesIndexRoute = CountriesIndexRouteImport.update({
+  id: '/countries/',
+  path: '/countries/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CountriesSlugRoute = CountriesSlugRouteImport.update({
+  id: '/countries/$slug',
+  path: '/countries/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DeIndexRoute = DeIndexRouteImport.update({
   id: '/de/',
   path: '/de/',
@@ -584,6 +596,7 @@ export interface FileRoutesByFullPath {
   '/ar/$country': typeof ArCountryRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
   '/compare/$tool': typeof CompareToolRoute
+  '/countries/$slug': typeof CountriesSlugRoute
   '/de/$country': typeof DeCountryRoute
   '/en/$country': typeof EnCountryRoute
   '/es/$country': typeof EsCountryRoute
@@ -595,6 +608,7 @@ export interface FileRoutesByFullPath {
   '/zh/$country': typeof ZhCountryRoute
   '/ar/': typeof ArIndexRoute
   '/compare/': typeof CompareIndexRoute
+  '/countries/': typeof CountriesIndexRoute
   '/de/': typeof DeIndexRoute
   '/en/': typeof EnIndexRoute
   '/es/': typeof EsIndexRoute
@@ -673,6 +687,7 @@ export interface FileRoutesByTo {
   '/ar/$country': typeof ArCountryRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
   '/compare/$tool': typeof CompareToolRoute
+  '/countries/$slug': typeof CountriesSlugRoute
   '/de/$country': typeof DeCountryRoute
   '/en/$country': typeof EnCountryRoute
   '/es/$country': typeof EsCountryRoute
@@ -684,6 +699,7 @@ export interface FileRoutesByTo {
   '/zh/$country': typeof ZhCountryRoute
   '/ar': typeof ArIndexRoute
   '/compare': typeof CompareIndexRoute
+  '/countries': typeof CountriesIndexRoute
   '/de': typeof DeIndexRoute
   '/en': typeof EnIndexRoute
   '/es': typeof EsIndexRoute
@@ -763,6 +779,7 @@ export interface FileRoutesById {
   '/ar/$country': typeof ArCountryRoute
   '/auth/native-return': typeof AuthNativeReturnRoute
   '/compare/$tool': typeof CompareToolRoute
+  '/countries/$slug': typeof CountriesSlugRoute
   '/de/$country': typeof DeCountryRoute
   '/en/$country': typeof EnCountryRoute
   '/es/$country': typeof EsCountryRoute
@@ -774,6 +791,7 @@ export interface FileRoutesById {
   '/zh/$country': typeof ZhCountryRoute
   '/ar/': typeof ArIndexRoute
   '/compare/': typeof CompareIndexRoute
+  '/countries/': typeof CountriesIndexRoute
   '/de/': typeof DeIndexRoute
   '/en/': typeof EnIndexRoute
   '/es/': typeof EsIndexRoute
@@ -854,6 +872,7 @@ export interface FileRouteTypes {
     | '/ar/$country'
     | '/auth/native-return'
     | '/compare/$tool'
+    | '/countries/$slug'
     | '/de/$country'
     | '/en/$country'
     | '/es/$country'
@@ -865,6 +884,7 @@ export interface FileRouteTypes {
     | '/zh/$country'
     | '/ar/'
     | '/compare/'
+    | '/countries/'
     | '/de/'
     | '/en/'
     | '/es/'
@@ -943,6 +963,7 @@ export interface FileRouteTypes {
     | '/ar/$country'
     | '/auth/native-return'
     | '/compare/$tool'
+    | '/countries/$slug'
     | '/de/$country'
     | '/en/$country'
     | '/es/$country'
@@ -954,6 +975,7 @@ export interface FileRouteTypes {
     | '/zh/$country'
     | '/ar'
     | '/compare'
+    | '/countries'
     | '/de'
     | '/en'
     | '/es'
@@ -1032,6 +1054,7 @@ export interface FileRouteTypes {
     | '/ar/$country'
     | '/auth/native-return'
     | '/compare/$tool'
+    | '/countries/$slug'
     | '/de/$country'
     | '/en/$country'
     | '/es/$country'
@@ -1043,6 +1066,7 @@ export interface FileRouteTypes {
     | '/zh/$country'
     | '/ar/'
     | '/compare/'
+    | '/countries/'
     | '/de/'
     | '/en/'
     | '/es/'
@@ -1122,6 +1146,7 @@ export interface RootRouteChildren {
   ArCountryRoute: typeof ArCountryRoute
   AuthNativeReturnRoute: typeof AuthNativeReturnRoute
   CompareToolRoute: typeof CompareToolRoute
+  CountriesSlugRoute: typeof CountriesSlugRoute
   DeCountryRoute: typeof DeCountryRoute
   EnCountryRoute: typeof EnCountryRoute
   EsCountryRoute: typeof EsCountryRoute
@@ -1133,6 +1158,7 @@ export interface RootRouteChildren {
   ZhCountryRoute: typeof ZhCountryRoute
   ArIndexRoute: typeof ArIndexRoute
   CompareIndexRoute: typeof CompareIndexRoute
+  CountriesIndexRoute: typeof CountriesIndexRoute
   DeIndexRoute: typeof DeIndexRoute
   EnIndexRoute: typeof EnIndexRoute
   EsIndexRoute: typeof EsIndexRoute
@@ -1491,6 +1517,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompareToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/countries/': {
+      id: '/countries/'
+      path: '/countries'
+      fullPath: '/countries/'
+      preLoaderRoute: typeof CountriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/countries/$slug': {
+      id: '/countries/$slug'
+      path: '/countries/$slug'
+      fullPath: '/countries/$slug'
+      preLoaderRoute: typeof CountriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/de/': {
       id: '/de/'
       path: '/de'
@@ -1826,6 +1866,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArCountryRoute: ArCountryRoute,
   AuthNativeReturnRoute: AuthNativeReturnRoute,
   CompareToolRoute: CompareToolRoute,
+  CountriesSlugRoute: CountriesSlugRoute,
   DeCountryRoute: DeCountryRoute,
   EnCountryRoute: EnCountryRoute,
   EsCountryRoute: EsCountryRoute,
@@ -1837,6 +1878,7 @@ const rootRouteChildren: RootRouteChildren = {
   ZhCountryRoute: ZhCountryRoute,
   ArIndexRoute: ArIndexRoute,
   CompareIndexRoute: CompareIndexRoute,
+  CountriesIndexRoute: CountriesIndexRoute,
   DeIndexRoute: DeIndexRoute,
   EnIndexRoute: EnIndexRoute,
   EsIndexRoute: EsIndexRoute,

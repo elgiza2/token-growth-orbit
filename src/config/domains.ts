@@ -15,7 +15,7 @@ const withRef = (host: string, url: string) => {
   return code ? `${url}${url.includes("?") ? "&" : "?"}ref=${code}` : url;
 };
 
-const PUBLIC_PATHS = /^\/(terms|privacy|subscription-terms|about|contact|cookies|security|docs|pricing|compare|sitemap\.xml|en|ar|es|fr|de|pt|ru|tr|hi|zh)(\/|$)/;
+const PUBLIC_PATHS = /^\/(terms|privacy|subscription-terms|about|contact|cookies|security|docs|pricing|compare|countries|sitemap\.xml|en|ar|es|fr|de|pt|ru|tr|hi|zh)(\/|$)/;
 
 const bare = (host: string) => host.toLowerCase().replace(/:\d+$/, "").replace(/^www\./, "");
 

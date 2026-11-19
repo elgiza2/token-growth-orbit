@@ -738,3 +738,8 @@
 - [x] Translate remaining English text on home/settings (Arabic + other languages)
 - [x] Pricing page before sign-up (web only), 22 SEO/GEO pages, trial excluded from marketer share, subscribe-first chat reply
 - [x] Language/country landing pages on the original design in the 10 most spoken languages, all in the sitemap
+
+## Country pages (current)
+- [x] Seven distinct designs from the user's prompts (Halden, Petalyx, Orvante, Velia, full-bleed, Tidewell, Nectarline)
+- [x] One page per country at /countries/<slug> in its own language, with country photos; old links redirect; footer + sitemap list them
+- [ ] Finish copy for every country (generation running; remaining countries publish automatically after build_index.py)

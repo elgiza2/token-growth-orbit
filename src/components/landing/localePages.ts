@@ -1,5 +1,6 @@
 import { TOOLS } from "@/components/compare/tools";
-/** Browser-safe list of public language and country pages. URL: /<lang> and /<lang>/<country>. */
+import { COUNTRY_PAGES } from "@/components/countries/list";
+/** Browser-safe list of public language pages (/<lang>). COUNTRIES only backs old /<lang>/<country> links, which redirect to /countries/<slug>. */
 export const PAGE_LANGS = ["en", "ar", "es", "fr", "de", "pt", "ru", "tr", "hi", "zh"] as const;
 export type PageLang = (typeof PAGE_LANGS)[number];
 export const LANG_NAMES: Record<PageLang, string> = { en: "English", ar: "العربية", es: "Español", fr: "Français", de: "Deutsch", pt: "Português", ru: "Русский", tr: "Türkçe", hi: "हिन्दी", zh: "中文" };
@@ -23,7 +24,7 @@ export const country = (code: string) => COUNTRIES.find((c) => c.code === code.t
 export const isPageLang = (v: string): v is PageLang => (PAGE_LANGS as readonly string[]).includes(v);
 export const countryName = (c: Country, l: PageLang, extra?: Record<string, string>) => c[l] ?? extra?.[c.code] ?? c.en;
 
-/** Every public marketing path, for the sitemap. */
+/** Every public marketing path, for the sitemap. Country pages live once each at /countries/<slug> in their own language. */
 export function marketingPaths(): string[] {
-  return ["/", "/pricing", "/compare", ...TOOLS.map((t) => `/compare/${t.slug}`), ...PAGE_LANGS.flatMap((l) => [`/${l}`, `/${l}/pricing`, ...COUNTRIES.map((c) => `/${l}/${c.code}`)])];
+  return ["/", "/pricing", "/compare", ...TOOLS.map((t) => `/compare/${t.slug}`), ...PAGE_LANGS.flatMap((l) => [`/${l}`, `/${l}/pricing`]), "/countries", ...COUNTRY_PAGES.map((c) => `/countries/${c.slug}`)];
 }

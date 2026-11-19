@@ -19,9 +19,9 @@ export function petalyx(ctx: Ctx) {
 .brand{display:flex;gap:6px;align-items:center;font-size:22px;font-weight:500;letter-spacing:-.04em}.brand svg{width:30px;height:22px}
 .cloud{position:absolute;z-index:4;width:min(44vw,640px);height:200px;pointer-events:none}.cloud i{position:absolute;inset:0;border-radius:50%;background:radial-gradient(closest-side,#fff 60%,rgba(255,255,255,0));filter:blur(6px)}.cloud i:nth-child(2){inset:30px -40px -10px 120px}.cloud i:nth-child(3){inset:-40px 140px 60px 40px}
 .cl{top:-3%;left:-5%;animation:dA 14s ease-in-out infinite alternate}.cr{top:2%;right:-6%;animation:dB 17s ease-in-out infinite alternate}
-h1{position:absolute;z-index:6;top:24%;width:100%;text-align:center;font-size:clamp(34px,5.2vw,76px);font-weight:400;letter-spacing:-.045em;line-height:1.04;padding:0 16px}
+.hc{position:absolute;z-index:6;top:clamp(90px,16vh,190px);left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:18px;padding:0 16px;text-align:center}h1{font-size:clamp(34px,5.2vw,76px);font-weight:400;letter-spacing:-.045em;line-height:1.04;padding:0 16px}
 .sx{display:inline-block;white-space:pre}.split .sx{opacity:0;filter:blur(10px);transform:translateY(18px);transition:all 1s var(--ease)}.split.go .sx{opacity:1;filter:none;transform:none}
-.hsub{position:absolute;z-index:6;top:calc(24% + clamp(90px,12vw,180px));width:100%;text-align:center;padding:0 20px}.hsub p{max-width:56ch;margin:0 auto 18px;color:#3b4030;line-height:1.5}
+.hc p{max-width:56ch;color:#3b4030;line-height:1.5}
 .media{position:absolute;left:0;right:0;bottom:0;height:62%;z-index:2;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 26%);mask-image:linear-gradient(to bottom,transparent 0,#000 26%)}.media img{width:100%;height:100%;object-fit:cover;object-position:center 60%;animation:kb 30s ease-in-out infinite alternate}@keyframes kb{to{transform:scale(1.08)}}
 .hg{position:absolute;inset:0;z-index:5;pointer-events:none}
 .stats{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:90px 16px;overflow:hidden}
@@ -40,11 +40,11 @@ h1{position:absolute;z-index:6;top:24%;width:100%;text-align:center;font-size:cl
 .cta{position:relative;margin:0 16px 16px;border-radius:32px;overflow:hidden;min-height:80vh;display:grid;place-items:center;text-align:center;color:#fff}.cta img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.9) hue-rotate(195deg)}.cta div{position:relative;padding:20px;max-width:760px}.cta .h2{color:#fff}.cta p{margin:16px auto 26px;opacity:.85;line-height:1.6}
 .ft{padding:40px 24px 30px;color:#3b4030}.ft-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:20px}.ft-brand{font-size:22px;font-weight:500;letter-spacing:-.04em}.ft-top nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px}.ft-links h4{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:#8a8f7f;margin:22px 0 10px}.ft-links div{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px}.ft-links a:hover,.ft-links a[aria-current]{color:var(--olive)}.ft-c{margin-top:26px;font-size:12px;color:#8a8f7f}
 .rv{opacity:0;transform:translateY(26px);filter:blur(6px);transition:all 1s var(--ease)}.rv.in{opacity:1;transform:none;filter:none}
-@media(max-width:760px){.nav{gap:16px}.cards{grid-template-columns:1fr 1fr}.uses,.plans,.loop{grid-template-columns:1fr}.hsub{top:auto;bottom:66%}h1{top:16%}.media{height:50%}.steps div{border-radius:20px}}`;
+@media(max-width:760px){.nav{gap:16px}.cards{grid-template-columns:1fr 1fr}.uses,.plans,.loop{grid-template-columns:1fr}.media{height:46%}.steps div{border-radius:20px}}`;
   const body = `<div class="backdrop" style="background-image:url('${esc(img(d, 0).src)}')"></div><div id="app">
 <section class="hero"><nav class="nav"><a class="brand" href="#"><svg viewBox="0 0 30 22"><circle cx="4" cy="17" r="3.6" fill="currentColor"/><path d="M10.5 18.5 16.8 5.2 25.5 18.5" fill="none" stroke="currentColor" stroke-width="5.4" stroke-linecap="round" stroke-linejoin="round"/></svg>ceyo</a><a class="btn" href="${esc(ctx.signup())}">${esc(ui(d, "start", "Start free trial"))}</a></nav>
 <div class="cloud cl"><i></i><i></i><i></i></div><div class="cloud cr"><i></i><i></i><i></i></div>
-<h1 class="split" id="ht">${headline(d)}</h1><div class="hsub"><p class="rv">${esc(d.sub)}</p></div>
+<div class="hc"><h1 class="split" id="ht">${headline(d)}</h1><p class="rv">${esc(d.sub)}</p></div>
 <div class="media"><img src="${esc(img(d, 0).src)}" alt="${esc(img(d, 0).alt)}"></div><div class="hg" id="hg"></div></section>
 <section class="stats" id="st"><span class="pill rv">${esc(d.eyebrow)}</span><h2 class="h2 split" id="sh">${esc(d.audience)}</h2>
 <div class="cards">${d.highlights.slice(0, 4).map((h, i) => `<div class="card rv" style="transition-delay:${i * 90}ms"><small>${esc(d.uses[i]?.t ?? "")}</small><b>${esc(h)}</b></div>`).join("")}</div><div class="shadow"></div>

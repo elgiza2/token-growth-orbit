@@ -2,6 +2,7 @@ import { buildLandingHtml, type LandingOptions } from "./buildLanding";
 import { webAppUrl } from "@/config/domains";
 import { COUNTRIES, PAGE_LANGS } from "./localePages";
 import type { PageLang as LandingLang } from "./localePages";
+import { COUNTRY_PAGES } from "@/components/countries/list";
 
 /** Full HTML response for a public marketing page, rendered on the server so search engines read it. */
 export function landingResponse(request: Request, opts: { lang: LandingLang; mode?: "home" | "pricing"; countryCode?: string }): Response {
@@ -26,11 +27,14 @@ export function landingResponse(request: Request, opts: { lang: LandingLang; mod
   return new Response(buildLandingHtml(o), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300" } });
 }
 
-/** /<lang>/pricing or /<lang>/<country>; unknown countries get a 404. */
+/** /<lang>/pricing, or an old /<lang>/<country> link (permanent redirect to the country page); unknown countries get a 404. */
 export function localePageResponse(request: Request, lang: LandingLang, segment: string): Response {
   if (segment === "pricing") return landingResponse(request, { lang, mode: "pricing" });
-  if (!COUNTRIES.some((c) => c.code === segment)) return new Response("Not found", { status: 404 });
-  return landingResponse(request, { lang, countryCode: segment });
+  const page = COUNTRY_PAGES.find((c) => c.code === segment.toLowerCase());
+  if (!page) return new Response("Not found", { status: 404 });
+  const url = new URL(request.url);
+  const fwd = url.hostname === "localhost" ? request.headers.get("x-forwarded-host") : null;
+  return Response.redirect(`${fwd ? `https://${fwd}` : url.origin}/countries/${page.slug}${url.search}`, 301);
 }
 
 /** Best page language from the browser's Accept-Language header (English by default). */

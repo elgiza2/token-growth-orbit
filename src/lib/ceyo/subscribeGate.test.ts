@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { gateState, subscribeGatePrompt } from "./subscribeGate";
-import { COUNTRIES, PAGE_LANGS, marketingPaths } from "@/components/landing/localePages";
+import { PAGE_LANGS, marketingPaths } from "@/components/landing/localePages";
+import { COUNTRY_PAGES } from "@/components/countries/list";
 import { landingRedirect } from "@/config/domains";
 
 describe("subscribe gate", () => {
@@ -10,6 +11,6 @@ describe("subscribe gate", () => {
 });
 describe("locale pages", () => {
   it("covers 10 languages", () => expect(PAGE_LANGS.length).toBe(10));
-  it("sitemap lists every language × country page", () => expect(marketingPaths()).toHaveLength(3 + 30 + PAGE_LANGS.length * (2 + COUNTRIES.length)));
+  it("sitemap lists every language page and each country page once", () => expect(marketingPaths()).toHaveLength(3 + 30 + PAGE_LANGS.length * 2 + 1 + COUNTRY_PAGES.length));
   it("pricing and locale pages stay on the marketer landing host", () => { expect(landingRedirect("matra.ceyo.app", "/pricing")).toBeNull(); expect(landingRedirect("matra.ceyo.app", "/ar/eg")).toBeNull(); });
 });
