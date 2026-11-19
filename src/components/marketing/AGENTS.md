@@ -1,0 +1,1 @@
+- /pricing and /ai/$slug share these components; web guests on protected app pages go to /pricing, Android keeps /auth. Why: plans and trial shown before sign-up.

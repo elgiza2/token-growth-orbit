@@ -57,5 +57,3 @@
 - Account deletion reauthenticates the caller and removes owned artifacts/data before deleting Supabase Auth; interrupted jobs stop for review rather than repeating external side effects. Why: destructive operations require verified ownership and honest completion.
 - Transactional email components share the CeyoMessage shell; hosted Auth templates are updated only through an operator-only Management API script and read-back. Why: branding must not replace native OTP or expose credentials.
 - Referral and chat-run rules: see src/lib/referrals/AGENTS.md.
-- Public pricing (/pricing) and SEO/GEO pages (/ai/$slug from src/data/seoPages.ts) are TanStack routes sharing src/components/marketing; web guests hitting protected app pages go to /pricing, Android keeps /auth. Why: show plans and the free trial before sign-up without loading the app.
-- Chat requests from accounts without plan/trial get a tool-free, uncharged model reply that reads the account status (src/lib/ceyo/subscribeGate*). Why: friendly subscribe prompt instead of an error, with no task execution.
