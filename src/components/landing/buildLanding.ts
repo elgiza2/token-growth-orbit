@@ -7,6 +7,7 @@ import type { PageLang as LandingLang } from "./localePages";
 import { PLAN_PRICES } from "@/lib/payments/plans";
 import { COUNTRIES, LANG_NAMES, PAGE_LANGS, countryName, type Country } from "./localePages";
 import { LANDING_I18N } from "./landingI18n";
+import { COUNTRY_PROFILES } from "./countryProfiles";
 
 const esc = (v: string) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 const orb = (color: string, size: number, state = "idle") => `<span class="o" data-c="${color}" data-s="${size}" data-st="${state}"></span>`;
@@ -88,13 +89,23 @@ export function buildLandingHtml(o: LandingOptions): string {
     if (m) html = html.replace(m[0], "").replace('<section class="triptych"', `${m[0]}<section class="triptych"`);
   }
 
+  // Country page: landmark photo + local audience and use cases.
+  const prof = o.country ? COUNTRY_PROFILES[o.country.code] : undefined;
+  if (prof) {
+    const L = ar ? prof.ar : prof.en;
+    const h = ar ? `Ceyo لـ${L.who} في ${cname}` : `Ceyo for ${L.who.toLowerCase()} in ${cname}`;
+    const uses = L.uses.map((u, i) => `<li>${orb(colors[i % colors.length], 26)}<span>${esc(u)}</span></li>`).join("");
+    const sec = `<section class="section" id="local"><div class="wrap local-grid reveal"><figure class="local-photo"><img src="${esc(prof.img)}" alt="${esc(prof.place)}, ${esc(cname)}" width="1200" height="630" loading="eager"><figcaption>${esc(prof.place)} · ${esc(L.city)}</figcaption></figure><div><h2>${esc(h)}</h2><ul class="local-uses">${uses}</ul><a class="btn" href="${esc(o.appLink("/auth?mode=signup"))}" target="_top">${esc(values.startCta ?? "Start")}</a></div></div></section>`;
+    html = html.replace('<section class="triptych"', `${sec}<section class="triptych"`);
+  }
+
   // Crawlable links between every language and country page.
   if (o.seo) {
     const link = (path: string, label: string) => `<a href="${path}" target="_top">${esc(label)}</a>`;
     const langs = PAGE_LANGS.map((l) => link(`/${l}${o.country ? `/${o.country.code}` : ""}`, LANG_NAMES[l])).join("");
-    const places = COUNTRIES.map((c) => link(`/${lang}/${c.code}`, countryName(c, lang, LANDING_I18N[lang]?.countries))).join("");
-    const block = `<section class="section" id="places"><div class="wrap"><div class="center reveal"><h2>${esc(t.elsewhere)}</h2></div><nav class="locale-links" aria-label="${esc(t.elsewhere)}">${places}</nav><nav class="locale-links" aria-label="${esc(t.languages)}">${langs}</nav></div></section>`;
-    html = html.replace("</main>", `${block}</main>`).replace("</style>", ".locale-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}.locale-links a{padding:8px 14px;border-radius:999px;background:var(--soft);font-size:14px;color:var(--muted)}.locale-links a:hover{color:var(--ink)}</style>");
+    const places = `<div class="place-cards">${COUNTRIES.map((c) => { const p = COUNTRY_PROFILES[c.code]; const n = countryName(c, lang, LANDING_I18N[lang]?.countries); return `<a class="place-card" href="/${lang}/${c.code}" target="_top"><img src="${esc(p?.img ?? "")}" alt="${esc(p?.place ?? n)}" loading="lazy" width="1200" height="630"><span>${esc(n)}</span></a>`; }).join("")}</div>`;
+    const block = `<section class="section" id="places"><div class="wrap"><div class="center reveal"><h2>${esc(t.elsewhere)}</h2></div>${places}<nav class="locale-links" aria-label="${esc(t.languages)}">${langs}</nav></div></section>`;
+    html = html.replace("</main>", `${block}</main>`).replace("</style>", ".locale-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}.locale-links a{padding:8px 14px;border-radius:999px;background:var(--soft);font-size:14px;color:var(--muted)}.locale-links a:hover{color:var(--ink)}.place-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:24px}.place-card{position:relative;display:block;border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:var(--soft)}.place-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.place-card:hover img{transform:scale(1.06)}.place-card span{position:absolute;inset:auto 0 0;padding:28px 12px 10px;font-size:14px;font-weight:600;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.65))}.local-grid{display:grid;gap:32px;align-items:center}@media(min-width:860px){.local-grid{grid-template-columns:1.1fr 1fr}}.local-photo{margin:0;border-radius:24px;overflow:hidden;background:var(--soft)}.local-photo img{width:100%;height:auto;display:block}.local-photo figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}.local-uses{list-style:none;padding:0;margin:20px 0 24px;display:grid;gap:12px}.local-uses li{display:flex;gap:12px;align-items:center;font-size:17px}</style>");
   }
 
   html = html
@@ -109,6 +120,7 @@ export function buildLandingHtml(o: LandingOptions): string {
   let head = `<title>${esc(title)}</title><meta name="description" content="${esc(desc)}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(desc)}"><meta property="og:type" content="website"><meta name="twitter:card" content="summary_large_image">`;
   if (o.seo) {
     const abs = (p: string) => `${o.seo!.origin}${p}`;
+    if (prof) { const im = abs(prof.img); head = head.replace('<meta name="twitter:card"', `<meta property="og:image" content="${esc(im)}"><meta name="twitter:image" content="${esc(im)}"><meta name="twitter:card"`); }
     head += `<link rel="canonical" href="${esc(abs(o.seo.path))}"><meta property="og:url" content="${esc(abs(o.seo.path))}">`;
     head += (o.seo.alternates || []).map((a) => `<link rel="alternate" hreflang="${a.hreflang}" href="${esc(abs(a.path))}">`).join("");
     head += `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "SoftwareApplication", name: "Ceyo", applicationCategory: "BusinessApplication", operatingSystem: "Web, Android", inLanguage: lang, description: desc, areaServed: o.country?.en, offers: { "@type": "AggregateOffer", priceCurrency: "USD", lowPrice: PLAN_PRICES.plus.monthly, highPrice: PLAN_PRICES.ultra.monthly } }).replace(/</g, "\\u003c")}</script>`;

@@ -1,1 +1,2 @@
 - /pricing, /<lang> and /<lang>/<country> are server-rendered full HTML from buildLanding.ts (same template as the main landing); languages/countries live in localePages.ts, extra translations in landingI18n.ts, all listed in /sitemap.xml with hreflang. Why: one design, crawlable pages.
+- Country pages read photos and local audience/use cases from countryProfiles.ts (landmark photos on the asset CDN, 1200x630, also used as og:image). Why: one source for every country page's visuals.
