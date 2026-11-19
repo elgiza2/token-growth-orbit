@@ -8,8 +8,7 @@ import { PLAN_PRICES } from "@/lib/payments/plans";
 import { LANG_NAMES, PAGE_LANGS, countryName, type Country } from "./localePages";
 import { LANDING_I18N } from "./landingI18n";
 import { COUNTRY_PROFILES } from "./countryProfiles";
-import { COUNTRY_PAGES } from "@/components/countries/list";
-import { TOOLS } from "@/components/compare/tools";
+import { footerPanels } from "@/components/countries/footerPanels";
 
 const esc = (v: string) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 const orb = (color: string, size: number, state = "idle") => `<span class="o" data-c="${color}" data-s="${size}" data-st="${state}"></span>`;
@@ -104,11 +103,7 @@ export function buildLandingHtml(o: LandingOptions): string {
 
   // Crawlable links between every language and country page.
   if (o.seo) {
-    const link = (path: string, label: string) => `<a href="${path}" target="_top">${esc(label)}</a>`;
-    const langs = PAGE_LANGS.map((l) => link(`/${l}${o.country ? `/${o.country.code}` : ""}`, LANG_NAMES[l])).join("");
-    const countries = COUNTRY_PAGES.map((c) => link(`/countries/${c.slug}`, c.name)).join("");
-    const compares = TOOLS.map((x) => link(`/compare/${x.slug}`, `Ceyo vs ${x.name}`)).join("");
-    const block = `<div class="f-links"><nav aria-label="${esc(t.elsewhere)}"><h3>${esc(t.elsewhere)}</h3><div>${countries}</div></nav><nav aria-label="${esc(t.languages)}"><h3>${esc(t.languages)}</h3><div>${langs}</div></nav><nav aria-label="Compare"><h3>Compare</h3><div>${compares}</div></nav></div>`;
+    const block = `<div class="f-links">${footerPanels({ labels: { world: ar ? "سيو حول العالم" : "SEO around the world", compare: ar ? "المقارنات" : "Comparisons", languages: t.languages }, langs: PAGE_LANGS.map((l) => ({ path: `/${l}${o.mode === "pricing" ? "/pricing" : ""}`, label: LANG_NAMES[l] })) })}</div>`;
     html = html.replace("</div>\n</footer>", `</div>\n${block}</footer>`).replace("</style>", ".f-links{position:relative;z-index:2;display:grid;gap:22px;padding:0 clamp(20px,5vw,64px) 40px}.f-links h3{font-size:13px;font-weight:500;opacity:.7;margin:0 0 10px;text-transform:uppercase;letter-spacing:.05em}.f-links div{display:flex;flex-wrap:wrap;gap:6px 18px}.f-links a{font-size:13px;opacity:.85}.f-links a:hover{opacity:1;text-decoration:underline}.local-grid{display:grid;gap:32px;align-items:center}@media(min-width:860px){.local-grid{grid-template-columns:1.1fr 1fr}}.local-photo{margin:0;border-radius:24px;overflow:hidden;background:var(--soft)}.local-photo img{width:100%;height:auto;display:block}.local-photo figcaption{padding:10px 14px;font-size:13px;color:var(--muted)}.local-uses{list-style:none;padding:0;margin:20px 0 24px;display:grid;gap:12px}.local-uses li{display:flex;gap:12px;align-items:center;font-size:17px}</style>");
   }
 

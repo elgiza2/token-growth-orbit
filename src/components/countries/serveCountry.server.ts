@@ -1,6 +1,7 @@
 /** Serves /countries/<slug>: loads that country's copy and renders it with one of seven designs (neighbours in the list never share one). */
 import { webAppUrl } from "@/config/domains";
-import { TOOLS } from "@/components/compare/tools";
+import { footerPanels } from "./footerPanels";
+import { LANG_NAMES, PAGE_LANGS } from "@/components/landing/localePages";
 import { COUNTRY_PAGES } from "./list";
 import { type CountryData, type Ctx, esc, pageHead, scriptFont } from "./shared";
 import { halden } from "./designs/halden";
@@ -24,8 +25,7 @@ function originOf(request: Request) {
 }
 
 function footerLinks(current: string, label: (k: string, f: string) => string) {
-  const a = (href: string, text: string, cur = false) => `<a href="${href}"${cur ? ' aria-current="page"' : ""}>${esc(text)}</a>`;
-  return `<div class="ft-links"><nav aria-label="Ceyo around the world"><h4>${esc(label("countries", "Ceyo around the world"))}</h4><div>${COUNTRY_PAGES.map((c) => a(`/countries/${c.slug}`, c.name, c.code === current)).join("")}</div></nav><nav aria-label="Compare"><h4>${esc(label("compare", "Compare"))}</h4><div>${TOOLS.map((t) => a(`/compare/${t.slug}`, `Ceyo vs ${t.name}`)).join("")}</div></nav></div>`;
+  return footerPanels({ current, labels: { world: label("countries", "SEO around the world"), compare: "Ceyo vs AI tools" }, langs: PAGE_LANGS.map((l) => ({ path: `/${l}`, label: LANG_NAMES[l] })) });
 }
 
 export async function countryPageResponse(request: Request, slug: string): Promise<Response> {
