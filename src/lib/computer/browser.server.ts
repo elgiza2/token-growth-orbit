@@ -1,4 +1,4 @@
-import { getProviderKey } from "@/lib/keys/providerKey";
+import { getProviderKey, isKeyFailure, markProviderKeyFailed } from "@/lib/keys/providerKey";
 import { browserAction, publicBrowserUrl, browserSessionLifetime, canRetryBrowserRead } from "./browserRules";
 import type { Computer } from "./e2b.server";
 import { exportArtifact } from "./artifacts.server";
@@ -11,7 +11,10 @@ export function createBotBrowser(userId: string, botId: string, computer: Comput
   let handoff = false;
   async function api(key: string, path: string, body?: object) {
     const res = await fetch(`${API}${path}`, { method: body ? "POST" : "GET", headers: { "X-BB-API-Key": key, "Content-Type": "application/json" }, ...(body ? { body: JSON.stringify(body) } : {}) });
-    if (!res.ok) throw new Error(`Browser unavailable (${res.status})`);
+    if (!res.ok) {
+      if (isKeyFailure(res.status)) await markProviderKeyFailed("browserbase", key, res.status);
+      throw new Error(`Browser unavailable (${res.status})`);
+    }
     return res.json();
   }
   async function open() {

@@ -4,7 +4,8 @@ import orbCss from "@/styles/agent.css?raw";
 import skyPainting from "@/assets/landing/sky-painting.jpg";
 import { LANDING_COPY, detectLandingLang, type LandingLang } from "./landingContent";
 import { PLAN_PRICES } from "@/lib/payments/plans";
-import { webAppOrigin } from "@/config/domains";
+import { webAppUrl } from "@/config/domains";
+import { marketerCodeForHost, cleanRefCode } from "@/lib/referrals/rules";
 
 const LANG_KEY = "ceyo-landing-lang";
 const esc = (v: string) => v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -23,7 +24,7 @@ export default function CeyoLanding() {
     const values: Record<string, string> = {
       ...copy.text,
       skyPainting,
-      appUrl: `${webAppOrigin(location.host, location.origin)}/auth`,
+      appUrl: webAppUrl(location.host, location.origin, "/auth"),
     };
     const pricing = (["plus", "pro", "ultra"] as const).map((tier) => {
       const prices = PLAN_PRICES[tier];
@@ -46,6 +47,14 @@ export default function CeyoLanding() {
       .replace('<html lang="en">', `<html lang="${lang}" dir="${ar ? "rtl" : "ltr"}">`)
       .replace("</head>", ar ? '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&amp;display=swap"></head>' : "</head>");
   }, [lang]);
+
+  useEffect(() => {
+    // Count one visit per browser session on a marketer page.
+    const code = marketerCodeForHost(location.host) ?? cleanRefCode(new URLSearchParams(location.search).get("ref"));
+    if (!code || sessionStorage.getItem("ceyo_ref_visit")) return;
+    sessionStorage.setItem("ceyo_ref_visit", "1");
+    void fetch("/api/public/ref-visit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code }), keepalive: true }).catch(() => undefined);
+  }, []);
 
   useEffect(() => {
     document.title = lang === "ar" ? "Ceyo — روبوتاتك الشخصية ومجموعاتك" : "Ceyo — Your Personal Bots and Group Chats";

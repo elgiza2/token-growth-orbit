@@ -2,7 +2,7 @@
  *  sandbox, reuses it for every run_code step (files and variables persist
  *  within the task) and kills it when the run ends. Model code never runs in
  *  the app process; without an E2B key every call fails closed. */
-import { getProviderKey } from "@/lib/keys/providerKey";
+import { getProviderKey, isKeyFailure, markProviderKeyFailed } from "@/lib/keys/providerKey";
 import { formatExecution, type ComputerLanguage } from "./execution";
 
 const API = "https://api.e2b.app";
@@ -26,7 +26,14 @@ async function openSandbox(key: string): Promise<Sandbox> {
     headers: { "X-API-Key": key, "Content-Type": "application/json" },
     body: JSON.stringify({ templateID: TEMPLATE, timeout: SANDBOX_TTL_S, secure: true }),
   });
-  if (!res.ok) throw new Error(`The cloud computer could not start (${res.status}).`);
+  if (!res.ok) {
+    if (isKeyFailure(res.status)) {
+      await markProviderKeyFailed("e2b", key, res.status);
+      const next = await getProviderKey("e2b", [key]);
+      if (next) return openSandbox(next);
+    }
+    throw new Error(`The cloud computer could not start (${res.status}).`);
+  }
   const j: any = await res.json();
   if (!j?.sandboxID) throw new Error("The cloud computer did not return a session.");
   return { id: j.sandboxID, token: j.envdAccessToken || undefined, domain: j.domain || "e2b.app", key };

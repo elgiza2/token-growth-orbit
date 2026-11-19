@@ -56,6 +56,7 @@ import { Route as ApiPublicConfigStatusRouteImport } from './routes/api/public/c
 import { Route as ApiPublicFxRouteImport } from './routes/api/public/fx'
 import { Route as ApiPublicGeoRouteImport } from './routes/api/public/geo'
 import { Route as ApiPublicKashierWebhookRouteImport } from './routes/api/public/kashier-webhook'
+import { Route as ApiPublicRefVisitRouteImport } from './routes/api/public/ref-visit'
 import { Route as ApiPublicRemindersTickRouteImport } from './routes/api/public/reminders-tick'
 import { Route as ApiPublicTelegramKeysRouteImport } from './routes/api/public/telegram-keys'
 import { Route as ApiPublicTelnyxVoiceRouteImport } from './routes/api/public/telnyx-voice'
@@ -307,6 +308,11 @@ const ApiPublicKashierWebhookRoute = ApiPublicKashierWebhookRouteImport.update({
   path: '/api/public/kashier-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicRefVisitRoute = ApiPublicRefVisitRouteImport.update({
+  id: '/api/public/ref-visit',
+  path: '/api/public/ref-visit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicRemindersTickRoute = ApiPublicRemindersTickRouteImport.update({
   id: '/api/public/reminders-tick',
   path: '/api/public/reminders-tick',
@@ -437,6 +443,7 @@ export interface FileRoutesByFullPath {
   '/api/public/fx': typeof ApiPublicFxRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/kashier-webhook': typeof ApiPublicKashierWebhookRoute
+  '/api/public/ref-visit': typeof ApiPublicRefVisitRoute
   '/api/public/reminders-tick': typeof ApiPublicRemindersTickRoute
   '/api/public/telegram-keys': typeof ApiPublicTelegramKeysRoute
   '/api/public/telnyx-voice': typeof ApiPublicTelnyxVoiceRoute
@@ -501,6 +508,7 @@ export interface FileRoutesByTo {
   '/api/public/fx': typeof ApiPublicFxRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/kashier-webhook': typeof ApiPublicKashierWebhookRoute
+  '/api/public/ref-visit': typeof ApiPublicRefVisitRoute
   '/api/public/reminders-tick': typeof ApiPublicRemindersTickRoute
   '/api/public/telegram-keys': typeof ApiPublicTelegramKeysRoute
   '/api/public/telnyx-voice': typeof ApiPublicTelnyxVoiceRoute
@@ -566,6 +574,7 @@ export interface FileRoutesById {
   '/api/public/fx': typeof ApiPublicFxRoute
   '/api/public/geo': typeof ApiPublicGeoRoute
   '/api/public/kashier-webhook': typeof ApiPublicKashierWebhookRoute
+  '/api/public/ref-visit': typeof ApiPublicRefVisitRoute
   '/api/public/reminders-tick': typeof ApiPublicRemindersTickRoute
   '/api/public/telegram-keys': typeof ApiPublicTelegramKeysRoute
   '/api/public/telnyx-voice': typeof ApiPublicTelnyxVoiceRoute
@@ -632,6 +641,7 @@ export interface FileRouteTypes {
     | '/api/public/fx'
     | '/api/public/geo'
     | '/api/public/kashier-webhook'
+    | '/api/public/ref-visit'
     | '/api/public/reminders-tick'
     | '/api/public/telegram-keys'
     | '/api/public/telnyx-voice'
@@ -696,6 +706,7 @@ export interface FileRouteTypes {
     | '/api/public/fx'
     | '/api/public/geo'
     | '/api/public/kashier-webhook'
+    | '/api/public/ref-visit'
     | '/api/public/reminders-tick'
     | '/api/public/telegram-keys'
     | '/api/public/telnyx-voice'
@@ -760,6 +771,7 @@ export interface FileRouteTypes {
     | '/api/public/fx'
     | '/api/public/geo'
     | '/api/public/kashier-webhook'
+    | '/api/public/ref-visit'
     | '/api/public/reminders-tick'
     | '/api/public/telegram-keys'
     | '/api/public/telnyx-voice'
@@ -825,6 +837,7 @@ export interface RootRouteChildren {
   ApiPublicFxRoute: typeof ApiPublicFxRoute
   ApiPublicGeoRoute: typeof ApiPublicGeoRoute
   ApiPublicKashierWebhookRoute: typeof ApiPublicKashierWebhookRoute
+  ApiPublicRefVisitRoute: typeof ApiPublicRefVisitRoute
   ApiPublicRemindersTickRoute: typeof ApiPublicRemindersTickRoute
   ApiPublicTelegramKeysRoute: typeof ApiPublicTelegramKeysRoute
   ApiPublicTelnyxVoiceRoute: typeof ApiPublicTelnyxVoiceRoute
@@ -1173,6 +1186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicKashierWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ref-visit': {
+      id: '/api/public/ref-visit'
+      path: '/api/public/ref-visit'
+      fullPath: '/api/public/ref-visit'
+      preLoaderRoute: typeof ApiPublicRefVisitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/reminders-tick': {
       id: '/api/public/reminders-tick'
       path: '/api/public/reminders-tick'
@@ -1329,6 +1349,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicFxRoute: ApiPublicFxRoute,
   ApiPublicGeoRoute: ApiPublicGeoRoute,
   ApiPublicKashierWebhookRoute: ApiPublicKashierWebhookRoute,
+  ApiPublicRefVisitRoute: ApiPublicRefVisitRoute,
   ApiPublicRemindersTickRoute: ApiPublicRemindersTickRoute,
   ApiPublicTelegramKeysRoute: ApiPublicTelegramKeysRoute,
   ApiPublicTelnyxVoiceRoute: ApiPublicTelnyxVoiceRoute,
